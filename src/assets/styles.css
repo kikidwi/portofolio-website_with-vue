@@ -1,0 +1,237 @@
+:root {
+  /* Layout */
+  --container: 1100px; /* lebar default di laptop */
+  --container-xl: 1200px; /* layar besar */
+  --container-2xl: 1280px; /* layar ekstra besar */
+  --gutter: 24px; /* padding kiri/kanan container */
+  --radius: 12px; /* radius default */
+  --radius-sm: 10px;
+
+  /* Colors (dark default) */
+  --bg: #0a0a0a;
+  --surface: #17181a;
+  --muted: #a6adbb;
+  --text: #e8e8ea;
+  --border: #242528;
+  --accent: #5c7cfa;
+  --chip: #222327;
+
+  color-scheme: dark light; /* beri tahu browser kita punya 2 skema */
+}
+
+/* Jika user set light via data-theme */
+:root[data-theme="light"] {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --muted: #5b6573;
+  --text: #0f172a;
+  --border: #e5e7eb;
+  --chip: #f1f5f9;
+  color-scheme: light;
+}
+
+/* Fallback: ikuti preferensi OS jika tidak ada data-theme */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --muted: #5b6573;
+    --text: #0f172a;
+    --border: #e5e7eb;
+    --chip: #f1f5f9;
+    color-scheme: light;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Link halus dan aksesibel */
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed var(--border);
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+a:hover {
+  border-color: var(--accent);
+}
+
+.container {
+  /* Trik anti full-width: lebar = min( max lebar , lebar layar - gutter ) */
+  width: min(100% - (var(--gutter) * 2), var(--container));
+  margin-inline: auto;
+}
+
+@media (min-width: 1280px) {
+  .container {
+    width: min(100% - (var(--gutter) * 2), var(--container-xl));
+  }
+}
+@media (min-width: 1536px) {
+  .container {
+    width: min(100% - (var(--gutter) * 2), var(--container-2xl));
+  }
+}
+
+/* In case kamu butuh container dengan padding internal tetap */
+.container-pad {
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: 24px;
+}
+.section__title {
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+.section__subtitle {
+  color: var(--muted);
+  margin: -6px 0 12px;
+}
+
+.rule {
+  border: 0;
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.05s ease;
+}
+.button:hover {
+  border-color: var(--accent);
+}
+.button:active {
+  transform: translateY(1px);
+}
+
+.badge {
+  font-size: 12px;
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+}
+
+.grid-12 {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+/* Utility untuk span kolom (opsional) */
+.col-span-12 {
+  grid-column: span 12;
+}
+.col-span-6 {
+  grid-column: span 6;
+}
+.col-span-4 {
+  grid-column: span 4;
+}
+.col-span-3 {
+  grid-column: span 3;
+}
+
+@media (max-width: 960px) {
+  .grid-12 > * {
+    grid-column: span 12 !important;
+  }
+}
+
+/* Chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.chip {
+  background: var(--chip);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+.chip--ghost {
+  background: transparent;
+  color: var(--muted);
+}
+
+/* Focus ring yang konsisten */
+:where(a, button, [role="button"], input, select, textarea):focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Pilihan teks */
+::selection {
+  background: color-mix(in oklab, var(--accent) 35%, transparent);
+  color: var(--text);
+}
+
+/* Scrollbar yang halus (WebKit) */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--muted) 35%, transparent);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
