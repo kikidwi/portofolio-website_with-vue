@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, useTemplateRef } from 'vue';
+import { computed, onMounted, onUnmounted, useTemplateRef } from "vue";
 
 interface Props {
   avatarUrl?: string;
@@ -83,54 +83,65 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  avatarUrl: '<Placeholder for avatar URL>',
-  iconUrl: '<Placeholder for icon URL>',
-  grainUrl: '<Placeholder for grain URL>',
+  avatarUrl: "<Placeholder for avatar URL>",
+  iconUrl: "<Placeholder for icon URL>",
+  grainUrl: "<Placeholder for grain URL>",
   behindGradient: undefined,
   innerGradient: undefined,
   showBehindGradient: true,
-  className: '',
+  className: "",
   enableTilt: true,
   miniAvatarUrl: undefined,
-  name: 'Javi A. Torres',
-  title: 'Software Engineer',
-  handle: 'javicodes',
-  status: 'Online',
-  contactText: 'Contact',
-  showUserInfo: true
+  name: "Javi A. Torres",
+  title: "Software Engineer",
+  handle: "javicodes",
+  status: "Online",
+  contactText: "Contact",
+  showUserInfo: true,
 });
 
 const emit = defineEmits<{
   contactClick: [];
 }>();
 
-const wrapRef = useTemplateRef<HTMLDivElement>('wrapRef');
-const cardRef = useTemplateRef<HTMLElement>('cardRef');
+const wrapRef = useTemplateRef<HTMLDivElement>("wrapRef");
+const cardRef = useTemplateRef<HTMLElement>("cardRef");
 
 const DEFAULT_BEHIND_GRADIENT =
-  'radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y),hsla(266,100%,90%,var(--card-opacity)) 4%,hsla(266,50%,80%,calc(var(--card-opacity)*0.75)) 10%,hsla(266,25%,70%,calc(var(--card-opacity)*0.5)) 50%,hsla(266,0%,60%,0) 100%),radial-gradient(35% 52% at 55% 20%,#00ffaac4 0%,#073aff00 100%),radial-gradient(100% 100% at 50% 50%,#00c1ffff 1%,#073aff00 76%),conic-gradient(from 124deg at 50% 50%,#c137ffff 0%,#07c6ffff 40%,#07c6ffff 60%,#c137ffff 100%)';
+  "radial-gradient(farthest-side circle at var(--pointer-x) var(--pointer-y),hsla(266,100%,90%,var(--card-opacity)) 4%,hsla(266,50%,80%,calc(var(--card-opacity)*0.75)) 10%,hsla(266,25%,70%,calc(var(--card-opacity)*0.5)) 50%,hsla(266,0%,60%,0) 100%),radial-gradient(35% 52% at 55% 20%,#00ffaac4 0%,#073aff00 100%),radial-gradient(100% 100% at 50% 50%,#00c1ffff 1%,#073aff00 76%),conic-gradient(from 124deg at 50% 50%,#c137ffff 0%,#07c6ffff 40%,#07c6ffff 60%,#c137ffff 100%)";
 
-const DEFAULT_INNER_GRADIENT = 'linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)';
+const DEFAULT_INNER_GRADIENT = "linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)";
 
 const ANIMATION_CONFIG = {
   SMOOTH_DURATION: 600,
   INITIAL_DURATION: 1500,
   INITIAL_X_OFFSET: 70,
-  INITIAL_Y_OFFSET: 60
+  INITIAL_Y_OFFSET: 60,
 } as const;
 
 const clamp = (value: number, min = 0, max = 100): number => Math.min(Math.max(value, min), max);
 
 const round = (value: number, precision = 3): number => parseFloat(value.toFixed(precision));
 
-const adjust = (value: number, fromMin: number, fromMax: number, toMin: number, toMax: number): number =>
-  round(toMin + ((toMax - toMin) * (value - fromMin)) / (fromMax - fromMin));
+const adjust = (
+  value: number,
+  fromMin: number,
+  fromMax: number,
+  toMin: number,
+  toMax: number
+): number => round(toMin + ((toMax - toMin) * (value - fromMin)) / (fromMax - fromMin));
 
-const easeInOutCubic = (x: number): number => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const easeInOutCubic = (x: number): number =>
+  x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 
 let rafId: number | null = null;
 
-const updateCardTransform = (offsetX: number, offsetY: number, card: HTMLElement, wrap: HTMLElement) => {
+const updateCardTransform = (
+  offsetX: number,
+  offsetY: number,
+  card: HTMLElement,
+  wrap: HTMLElement
+) => {
   const width = card.clientWidth;
   const height = card.clientHeight;
 
@@ -141,15 +152,15 @@ const updateCardTransform = (offsetX: number, offsetY: number, card: HTMLElement
   const centerY = percentY - 50;
 
   const properties = {
-    '--pointer-x': `${percentX}%`,
-    '--pointer-y': `${percentY}%`,
-    '--background-x': `${adjust(percentX, 0, 100, 35, 65)}%`,
-    '--background-y': `${adjust(percentY, 0, 100, 35, 65)}%`,
-    '--pointer-from-center': `${clamp(Math.hypot(percentY - 50, percentX - 50) / 50, 0, 1)}`,
-    '--pointer-from-top': `${percentY / 100}`,
-    '--pointer-from-left': `${percentX / 100}`,
-    '--rotate-x': `${round(-(centerX / 5))}deg`,
-    '--rotate-y': `${round(centerY / 4)}deg`
+    "--pointer-x": `${percentX}%`,
+    "--pointer-y": `${percentY}%`,
+    "--background-x": `${adjust(percentX, 0, 100, 35, 65)}%`,
+    "--background-y": `${adjust(percentY, 0, 100, 35, 65)}%`,
+    "--pointer-from-center": `${clamp(Math.hypot(percentY - 50, percentX - 50) / 50, 0, 1)}`,
+    "--pointer-from-top": `${percentY / 100}`,
+    "--pointer-from-left": `${percentX / 100}`,
+    "--rotate-x": `${round(-(centerX / 5))}deg`,
+    "--rotate-y": `${round(centerY / 4)}deg`,
   };
 
   Object.entries(properties).forEach(([property, value]) => {
@@ -210,8 +221,8 @@ const handlePointerEnter = () => {
   if (!card || !wrap || !props.enableTilt) return;
 
   cancelAnimation();
-  wrap.classList.add('active');
-  card.classList.add('active');
+  wrap.classList.add("active");
+  card.classList.add("active");
 };
 
 const handlePointerLeave = (event: PointerEvent) => {
@@ -221,29 +232,31 @@ const handlePointerLeave = (event: PointerEvent) => {
   if (!card || !wrap || !props.enableTilt) return;
 
   createSmoothAnimation(ANIMATION_CONFIG.SMOOTH_DURATION, event.offsetX, event.offsetY, card, wrap);
-  wrap.classList.remove('active');
-  card.classList.remove('active');
+  wrap.classList.remove("active");
+  card.classList.remove("active");
 };
 
 const cardStyle = computed(() => ({
-  '--icon': props.iconUrl ? `url(${props.iconUrl})` : 'none',
-  '--grain': props.grainUrl ? `url(${props.grainUrl})` : 'none',
-  '--behind-gradient': props.showBehindGradient ? (props.behindGradient ?? DEFAULT_BEHIND_GRADIENT) : 'none',
-  '--inner-gradient': props.innerGradient ?? DEFAULT_INNER_GRADIENT
+  "--icon": props.iconUrl ? `url(${props.iconUrl})` : "none",
+  "--grain": props.grainUrl ? `url(${props.grainUrl})` : "none",
+  "--behind-gradient": props.showBehindGradient
+    ? props.behindGradient ?? DEFAULT_BEHIND_GRADIENT
+    : "none",
+  "--inner-gradient": props.innerGradient ?? DEFAULT_INNER_GRADIENT,
 }));
 
 const handleContactClick = () => {
-  emit('contactClick');
+  emit("contactClick");
 };
 
 const handleAvatarError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  target.style.display = 'none';
+  target.style.display = "none";
 };
 
 const handleMiniAvatarError = (event: Event) => {
   const target = event.target as HTMLImageElement;
-  target.style.opacity = '0.5';
+  target.style.opacity = "0.5";
   target.src = props.avatarUrl;
 };
 
@@ -255,9 +268,9 @@ onMounted(() => {
 
   if (!card || !wrap) return;
 
-  card.addEventListener('pointerenter', handlePointerEnter);
-  card.addEventListener('pointermove', handlePointerMove);
-  card.addEventListener('pointerleave', handlePointerLeave);
+  card.addEventListener("pointerenter", handlePointerEnter);
+  card.addEventListener("pointermove", handlePointerMove);
+  card.addEventListener("pointerleave", handlePointerLeave);
 
   const initialX = wrap.clientWidth - ANIMATION_CONFIG.INITIAL_X_OFFSET;
   const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
@@ -270,9 +283,9 @@ onUnmounted(() => {
   const card = cardRef.value;
 
   if (card) {
-    card.removeEventListener('pointerenter', handlePointerEnter);
-    card.removeEventListener('pointermove', handlePointscript);
-    card.removeEventListener('pointerleave', handlePointerLeave);
+    card.removeEventListener("pointerenter", handlePointerEnter);
+    card.removeEventListener("pointermove", handlePointscript);
+    card.removeEventListener("pointerleave", handlePointerLeave);
   }
 
   cancelAnimation();
@@ -318,7 +331,7 @@ onUnmounted(() => {
 }
 
 .pc-card-wrapper::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -10px;
   background: inherit;
@@ -356,13 +369,8 @@ onUnmounted(() => {
   transition: transform 1s ease;
   transform: translate3d(0, 0, 0.1px) rotateX(0deg) rotateY(0deg);
   background-size: 100% 100%;
-  background-position:
-    0 0,
-    0 0,
-    50% 50%,
-    0 0;
-  background-image:
-    radial-gradient(
+  background-position: 0 0, 0 0, 50% 50%, 0 0;
+  background-image: radial-gradient(
       farthest-side circle at var(--pointer-x) var(--pointer-y),
       hsla(266, 100%, 90%, var(--card-opacity)) 4%,
       hsla(266, 50%, 80%, calc(var(--card-opacity) * 0.75)) 10%,
@@ -371,7 +379,13 @@ onUnmounted(() => {
     ),
     radial-gradient(35% 52% at 55% 20%, #00ffaac4 0%, #073aff00 100%),
     radial-gradient(100% 100% at 50% 50%, #00c1ffff 1%, #073aff00 76%),
-    conic-gradient(from 124deg at 50% 50%, #c137ffff 0%, #07c6ffff 40%, #07c6ffff 60%, #c137ffff 100%);
+    conic-gradient(
+      from 124deg at 50% 50%,
+      #c137ffff 0%,
+      #07c6ffff 40%,
+      #07c6ffff 60%,
+      #c137ffff 100%
+    );
   overflow: hidden;
 }
 
@@ -407,7 +421,8 @@ onUnmounted(() => {
   -webkit-mask-mode: luminance;
   -webkit-mask-repeat: repeat;
   -webkit-mask-size: 150%;
-  -webkit-mask-position: top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x));
+  -webkit-mask-position: top calc(200% - (var(--background-y) * 5)) left
+    calc(100% - var(--background-x));
   transition: filter 0.6s ease;
   filter: brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5);
   animation: holo-bg 18s linear infinite;
@@ -424,8 +439,7 @@ onUnmounted(() => {
   background: transparent;
   background-size: cover;
   background-position: center;
-  background-image:
-    repeating-linear-gradient(
+  background-image: repeating-linear-gradient(
       0deg,
       var(--sunpillar-clr-1) calc(var(--space) * 1),
       var(--sunpillar-clr-2) calc(var(--space) * 2),
@@ -450,21 +464,15 @@ onUnmounted(() => {
       hsla(0, 0%, 0%, 0.15) 20%,
       hsla(0, 0%, 0%, 0.25) 120%
     );
-  background-position:
-    0 var(--background-y),
-    var(--background-x) var(--background-y),
-    center;
+  background-position: 0 var(--background-y), var(--background-x) var(--background-y), center;
   background-blend-mode: color, hard-light;
-  background-size:
-    500% 500%,
-    300% 300%,
-    200% 200%;
+  background-size: 500% 500%, 300% 300%, 200% 200%;
   background-repeat: repeat;
 }
 
 .pc-shine::before,
 .pc-shine::after {
-  content: '';
+  content: "";
   background-position: center;
   background-size: cover;
   grid-area: 1/1;
@@ -485,8 +493,7 @@ onUnmounted(() => {
 }
 
 .pc-shine::before {
-  background-image:
-    linear-gradient(
+  background-image: linear-gradient(
       45deg,
       var(--sunpillar-4),
       var(--sunpillar-5),
@@ -495,26 +502,24 @@ onUnmounted(() => {
       var(--sunpillar-2),
       var(--sunpillar-3)
     ),
-    radial-gradient(circle at var(--pointer-x) var(--pointer-y), hsl(0, 0%, 70%) 0%, hsla(0, 0%, 30%, 0.2) 90%),
+    radial-gradient(
+      circle at var(--pointer-x) var(--pointer-y),
+      hsl(0, 0%, 70%) 0%,
+      hsla(0, 0%, 30%, 0.2) 90%
+    ),
     var(--grain);
-  background-size:
-    250% 250%,
-    100% 100%,
-    220px 220px;
-  background-position:
-    var(--pointer-x) var(--pointer-y),
-    center,
+  background-size: 250% 250%, 100% 100%, 220px 220px;
+  background-position: var(--pointer-x) var(--pointer-y), center,
     calc(var(--pointer-x) * 0.01) calc(var(--pointer-y) * 0.01);
   background-blend-mode: color-dodge;
-  filter: brightness(calc(2 - var(--pointer-from-center))) contrast(calc(var(--pointer-from-center) + 2))
-    saturate(calc(0.5 + var(--pointer-from-center)));
+  filter: brightness(calc(2 - var(--pointer-from-center)))
+    contrast(calc(var(--pointer-from-center) + 2)) saturate(calc(0.5 + var(--pointer-from-center)));
   mix-blend-mode: luminosity;
 }
 
 .pc-shine::after {
-  content: '';
-  background-image:
-    repeating-linear-gradient(
+  content: "";
+  background-image: repeating-linear-gradient(
       0deg,
       var(--sunpillar-clr-1) calc(5% * 1),
       var(--sunpillar-clr-2) calc(5% * 2),
@@ -539,14 +544,9 @@ onUnmounted(() => {
       hsla(0, 0%, 0%, 0.15) 20%,
       hsla(0, 0%, 0%, 0.25) 120%
     );
-  background-position:
-    0 var(--background-y),
-    calc(var(--background-x) * 0.4) calc(var(--background-y) * 0.5),
-    center;
-  background-size:
-    200% 300%,
-    700% 700%,
-    100% 100%;
+  background-position: 0 var(--background-y),
+    calc(var(--background-x) * 0.4) calc(var(--background-y) * 0.5), center;
+  background-size: 200% 300%, 700% 700%, 100% 100%;
   mix-blend-mode: difference;
   filter: brightness(0.8) contrast(1.5);
 }
@@ -579,7 +579,7 @@ onUnmounted(() => {
 }
 
 .pc-avatar-content::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -618,8 +618,8 @@ onUnmounted(() => {
 }
 
 .pc-mini-avatar {
-  width: 48px;
-  height: 48px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -733,159 +733,158 @@ onUnmounted(() => {
 
 @keyframes holo-bg {
   0% {
-    background-position:
-      0 var(--background-y),
-      0 0,
-      center;
+    background-position: 0 var(--background-y), 0 0, center;
   }
 
   100% {
-    background-position:
-      0 var(--background-y),
-      90% 90%,
-      center;
+    background-position: 0 var(--background-y), 90% 90%, center;
   }
 }
 
 @media (max-width: 768px) {
   .pc-card {
-    height: 70svh;
-    max-height: 450px;
+    height: 82svh; /* sebelumnya 70svh */
+    max-height: 640px; /* sebelumnya 450px */
   }
 
   .pc-details {
-    top: 2em;
+    top: 2.4em; /* beri ruang judul */
   }
 
   .pc-details h3 {
-    font-size: min(4svh, 2.5em);
+    /* judul lebih besar, responsif terhadap tinggi layar */
+    font-size: clamp(1.5rem, 5.5svh, 2.5rem);
   }
 
   .pc-details p {
-    font-size: 14px;
+    font-size: 15px; /* sebelumnya 14px */
   }
 
   .pc-user-info {
-    bottom: 15px;
-    left: 15px;
-    right: 15px;
-    padding: 10px 12px;
+    bottom: 18px;
+    left: 18px;
+    right: 18px;
+    padding: 12px 14px; /* sebelumnya 10px 12px */
+    border-radius: 16px;
   }
 
   .pc-mini-avatar {
-    width: 28px;
+    width: 34px; /* sebelumnya 28px */
+    height: 34px;
+  }
+
+  .pc-user-details {
+    gap: 12px; /* sebelumnya 10px */
+  }
+
+  .pc-handle {
+    font-size: 14px; /* sebelumnya 13px */
+  }
+
+  .pc-status {
+    font-size: 11px; /* sebelumnya 10px */
+  }
+
+  .pc-contact-btn {
+    padding: 8px 14px; /* sebelumnya 6px 12px */
+    font-size: 12px; /* sebelumnya 11px */
+    border-radius: 12px;
+  }
+}
+
+/* ≤ 480px — tetap besar dan nyaman dibaca */
+@media (max-width: 480px) {
+  .pc-card {
+    height: 80svh; /* sebelumnya 60svh */
+    max-height: 540px; /* sebelumnya 380px */
+  }
+
+  .pc-details {
+    top: 2.2em; /* sebelumnya 1.5em */
+  }
+
+  .pc-details h3 {
+    font-size: clamp(1.375rem, 5svh, 2.25rem);
+  }
+
+  .pc-details p {
+    font-size: 14px; /* sebelumnya 12px */
+    top: -4px; /* kurangi offset agar lebih rapi */
+  }
+
+  .pc-user-info {
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    padding: 10px 12px; /* sebelumnya 8px 10px */
+    border-radius: 16px; /* sebelumnya 50px (terlalu pill) */
+  }
+
+  .pc-mini-avatar {
+    width: 30px; /* sebelumnya 24px */
+    height: 30px;
+  }
+
+  .pc-user-details {
+    gap: 10px; /* sebelumnya 8px */
+  }
+
+  .pc-handle {
+    font-size: 13px; /* sebelumnya 12px */
+  }
+
+  .pc-status {
+    font-size: 10px; /* sama, tetap terbaca */
+  }
+
+  .pc-contact-btn {
+    padding: 7px 12px; /* sebelumnya 5px 10px */
+    font-size: 11px; /* sebelumnya 10px */
+    border-radius: 12px;
+  }
+}
+
+/* ≤ 320px — tetap lebih besar dari sebelumnya, tapi aman untuk layar mungil */
+@media (max-width: 320px) {
+  .pc-card {
+    height: 78svh; /* sebelumnya 55svh */
+    max-height: 560px; /* sebelumnya 320px */
+  }
+
+  .pc-details h3 {
+    font-size: clamp(1.25rem, 4.5svh, 2rem); /* sebelumnya min(3svh, 1.5em) */
+  }
+
+  .pc-details p {
+    font-size: 13px; /* sebelumnya 11px */
+  }
+
+  .pc-user-info {
+    padding: 8px 10px; /* sebelumnya 6px 8px */
+    border-radius: 12px;
+  }
+
+  .pc-mini-avatar {
+    width: 28px; /* sebelumnya 20px */
     height: 28px;
   }
 
   .pc-user-details {
-    gap: 10px;
+    gap: 8px; /* sebelumnya 6px */
   }
 
   .pc-handle {
-    font-size: 13px;
+    font-size: 12px; /* sebelumnya 11px */
   }
 
   .pc-status {
-    font-size: 10px;
+    font-size: 9px; /* sama, tetap proporsional */
   }
 
   .pc-contact-btn {
-    padding: 6px 12px;
-    font-size: 11px;
-  }
-}
-
-@media (max-width: 480px) {
-  .pc-card {
-    height: 60svh;
-    max-height: 380px;
-  }
-
-  .pc-details {
-    top: 1.5em;
-  }
-
-  .pc-details h3 {
-    font-size: min(3.5svh, 2em);
-  }
-
-  .pc-details p {
-    font-size: 12px;
-    top: -8px;
-  }
-
-  .pc-user-info {
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    padding: 8px 10px;
-    border-radius: 50px;
-  }
-
-  .pc-mini-avatar {
-    width: 24px;
-    height: 24px;
-  }
-
-  .pc-user-details {
-    gap: 8px;
-  }
-
-  .pc-handle {
-    font-size: 12px;
-  }
-
-  .pc-status {
-    font-size: 9px;
-  }
-
-  .pc-contact-btn {
-    padding: 5px 10px;
-    font-size: 10px;
-    border-radius: 50px;
-  }
-}
-
-@media (max-width: 320px) {
-  .pc-card {
-    height: 55svh;
-    max-height: 320px;
-  }
-
-  .pc-details h3 {
-    font-size: min(3svh, 1.5em);
-  }
-
-  .pc-details p {
-    font-size: 11px;
-  }
-
-  .pc-user-info {
-    padding: 6px 8px;
-    border-radius: 50px;
-  }
-
-  .pc-mini-avatar {
-    width: 20px;
-    height: 20px;
-  }
-
-  .pc-user-details {
-    gap: 6px;
-  }
-
-  .pc-handle {
-    font-size: 11px;
-  }
-
-  .pc-status {
-    font-size: 8px;
-  }
-
-  .pc-contact-btn {
-    padding: 4px 8px;
-    font-size: 9px;
-    border-radius: 50px;
+    padding: 6px 10px; /* sebelumnya 4px 8px */
+    font-size: 10px; /* sebelumnya 9px */
+    border-radius: 12px;
   }
 }
 </style>

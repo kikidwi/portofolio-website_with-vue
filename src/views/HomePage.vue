@@ -55,10 +55,11 @@
 
     <!-- ABOUT ME -->
     <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-      <div class="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12">
+      <div class="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
         <!-- Content -->
         <div class="flex-1 order-2 lg:order-1">
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-white">About Me</h2>
+
           <div class="space-y-4 text-gray-300 leading-relaxed">
             <p class="text-base sm:text-lg">
               I'm a passionate web developer who loves creating digital experiences that matter.
@@ -71,10 +72,11 @@
               latest industry trends. Whether it's crafting pixel-perfect interfaces or architecting
               scalable systems, I bring dedication and creativity to every project.
             </p>
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-white pt-4">
+
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 pt-4 text-white">
               What I Do
             </h2>
-            <div class="flex flex-wrap gap-2 sm:gap-3 mt-6">
+            <div class="flex flex-wrap gap-2 sm:gap-3 mt-4">
               <span
                 class="cursor-target px-3 sm:px-4 py-2 rounded-lg bg-[#242528] text-[#e8e8ea] text-xs sm:text-sm font-medium border border-[#3a3a3a] hover:border-[#5c7cfa] transition-colors shadow-lg hover:shadow-[#5c7cfa]/30"
               >
@@ -88,89 +90,91 @@
             </div>
           </div>
 
-          <!-- Actions -->
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mt-8">
-            <!-- Download Resume Button -->
-            <button
-              @click="downloadResume"
-              class="cursor-target group flex items-center gap-3 px-4 sm:px-6 py-3 bg-gradient-to-b from-[#4c63d2]/30 to-[#5c7cfa]/40 hover:from-[#4c63d2]/50 hover:to-[#5c7cfa]/40 text-white rounded-lg font-medium backdrop-blur-md border border-white/20 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-[#5c7cfa]/30 w-full sm:w-auto justify-center sm:justify-start"
-            >
-              <svg
-                class="w-5 h-5 transform group-hover:animate-bounce transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-              Download Resume
-            </button>
-
-            <!-- Social Media Icons -->
-            <div
-              class="flex items-center gap-3 sm:gap-4 justify-center sm:justify-start w-full sm:w-auto"
-            >
-              <!-- GitHub -->
-              <a
-                href="https://github.com/kikidwi"
-                target="_blank"
-                class="cursor-target group w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#242528] border border-[#3a3a3a] flex items-center justify-center transition-all duration-300 hover:border-transparent hover:shadow-lg hover:shadow-white/25 hover:bg-[#333]"
+          <!-- Actions: SELALU SEBARIS -->
+          <div class="mt-8">
+            <div class="flex items-center gap-2 sm:gap-3 md:gap-4 flex-nowrap">
+              <!-- Download Resume Button -->
+              <button
+                @click="downloadResume"
+                class="cursor-target group inline-flex items-center gap-2 sm:gap-3 px-3 py-2 text-sm sm:px-5 sm:py-3 sm:text-base bg-gradient-to-b from-[#4c63d2]/30 to-[#5c7cfa]/40 hover:from-[#4c63d2]/50 hover:to-[#5c7cfa]/40 text-white rounded-lg font-medium backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-[#5c7cfa]/30 whitespace-nowrap shrink-0"
               >
                 <svg
-                  class="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-white transition-colors"
-                  fill="currentColor"
+                  class="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:animate-bounce transition-transform"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
-              </a>
+                Download Resume
+              </button>
 
-              <!-- Instagram -->
-              <a
-                href="https://www.instagram.com/kikii.dwp/"
-                target="_blank"
-                class="cursor-target group w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#242528] border border-[#3a3a3a] flex items-center justify-center transition-all duration-300 hover:border-transparent hover:shadow-lg hover:shadow-pink-500/25 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-500"
-              >
-                <svg
-                  class="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-white transition-colors"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
+              <!-- Social Media Icons -->
+              <div class="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
+                <!-- GitHub -->
+                <a
+                  href="https://github.com/kikidwi"
+                  target="_blank"
+                  class="cursor-target group w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg bg-[#242528] border border-[#3a3a3a] flex items-center justify-center transition-all duration-300 hover:border-transparent hover:shadow-lg hover:shadow-white/25 hover:bg-[#333]"
                 >
-                  <path
-                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-                  />
-                </svg>
-              </a>
+                  <svg
+                    class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                    />
+                  </svg>
+                </a>
 
-              <!-- LinkedIn -->
-              <a
-                href="https://www.linkedin.com/in/kikidwi/"
-                target="_blank"
-                class="cursor-target group w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-[#242528] border border-[#3a3a3a] flex items-center justify-center transition-all duration-300 hover:border-transparent hover:shadow-lg hover:shadow-blue-500/25 hover:bg-[#0077b5]"
-              >
-                <svg
-                  class="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-white transition-colors"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
+                <!-- Instagram -->
+                <a
+                  href="https://www.instagram.com/kikii.dwp/"
+                  target="_blank"
+                  class="cursor-target group w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg bg-[#242528] border border-[#3a3a3a] flex items-center justify-center transition-all duration-300 hover:border-transparent hover:shadow-lg hover:shadow-pink-500/25 hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-orange-500"
                 >
-                  <path
-                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                  />
-                </svg>
-              </a>
+                  <svg
+                    class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 3.675c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162z"
+                    />
+                  </svg>
+                </a>
+
+                <!-- LinkedIn -->
+                <a
+                  href="https://www.linkedin.com/in/kikidwi/"
+                  target="_blank"
+                  class="cursor-target group w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg bg-[#242528] border border-[#3a3a3a] flex items-center justify-center transition-all duration-300 hover:border-transparent hover:shadow-lg hover:shadow-blue-500/25 hover:bg-[#0077b5]"
+                >
+                  <svg
+                    class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                    />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Profile Card -->
-        <div class="hidden xl:block order-1 lg:order-2 flex-shrink-0">
+        <!-- Profile Card: SELALU MUNCUL DI MOBILE -->
+        <div
+          class="order-1 lg:order-2 w-full max-w-sm mx-auto lg:mx-0 flex-shrink-0 lg:w-[360px] lg:sticky lg:top-24 md:w-[200px]"
+        >
           <ProfileCard
             name="Kiki Dwi Prasetyo"
             title="Web Developer"
@@ -235,7 +239,6 @@
       />
     </section>
 
-    <!-- EXPERIENCE SECTION -->
     <section class="max-w-6xl mx-auto px-6 py-16">
       <div class="text-center mb-16">
         <h3
@@ -246,33 +249,43 @@
         <p class="text-gray-400 text-lg">My journey through the world of technology</p>
       </div>
 
-      <!-- Timeline Container -->
       <div class="relative">
-        <!-- Central Timeline Line -->
+        <!-- Garis: kiri (mobile), center (desktop 1024px+) -->
         <div
-          class="absolute left-1/2 transform -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#5c7cfa] via-[#4c63d2] to-[#5c7cfa] timeline-line"
+          class="absolute top-0 bottom-0 left-4 min-[1024px]:left-1/2 w-px bg-gradient-to-b from-[#5c7cfa] via-[#4c63d2] to-[#5c7cfa]"
+          aria-hidden="true"
         ></div>
 
-        <!-- Experience Items -->
-        <div class="space-y-5">
-          <!-- Experience Item -->
+        <div class="space-y-10">
           <div
             v-for="(exp, index) in experiences"
             :key="exp.id"
-            class="relative experience-card"
-            :class="index % 2 === 0 ? 'left' : 'right'"
+            class="relative pl-14 min-[1024px]:pl-0"
             :style="{ animationDelay: `${0.2 + index * 0.2}s` }"
           >
-            <div class="flex items-center justify-between">
-              <!-- Card on the left (for even index) -->
-              <div v-if="index % 2 === 0" class="w-5/12 pr-8">
+            <!-- Titik: selalu center terhadap garis -->
+            <div
+              class="absolute top-1/2 -translate-y-1/2 left-4 -translate-x-1/2 min-[1024px]:left-1/2 z-10"
+              aria-hidden="true"
+            >
+              <div
+                class="w-10 h-10 min-[1024px]:w-16 min-[1024px]:h-16 rounded-full bg-[#5c7cfa] border-4 border-[#0f0f10] flex items-center justify-center shadow-lg"
+              >
+                <div class="w-2 h-2 min-[1024px]:w-3 min-[1024px]:h-3 rounded-full bg-white"></div>
+              </div>
+            </div>
+
+            <!-- Baris konten -->
+            <div class="flex items-stretch min-[1024px]:items-center min-[1024px]:justify-between">
+              <!-- Kartu kiri (even) -->
+              <div v-if="index % 2 === 0" class="w-full min-[1024px]:w-5/12 min-[1024px]:pr-8">
                 <div
-                  class="bg-black-900/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 glow-effect hover:border-[#5c7cfa]/30 hover:bg-[#242528] transition-all duration-300 shadow-lg hover:shadow-[#5c7cfa]/10"
+                  class="bg-[#0f0f10]/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 glow-effect hover:border-[#5c7cfa]/30 hover:bg-[#242528] transition-all duration-300 shadow-lg hover:shadow-[#5c7cfa]/10"
                 >
                   <div class="text-left">
                     <div class="flex justify-between items-start mb-2">
                       <h4 class="text-xl font-bold text-[#e8e8ea]">{{ exp.role }}</h4>
-                      <span class="text-sm text-[#a6adbb] font-mono pt-2">{{ exp.period }}</span>
+                      <span class="text-sm text-[#a6adbb] font-mono pt-1">{{ exp.period }}</span>
                     </div>
                     <div class="text-sm text-[#e8e8ea] mb-4">
                       {{ exp.company }} • {{ exp.location }}
@@ -281,8 +294,11 @@
                       <li
                         v-for="bullet in exp.bullets"
                         :key="bullet"
-                        class="text-[#a6adbb] leading-relaxed"
+                        class="text-[#a6adbb] leading-relaxed pl-4 relative"
                       >
+                        <span
+                          class="absolute left-0 top-2 w-1.5 h-1.5 bg-[#5c7cfa] rounded-full"
+                        ></span>
                         {{ bullet }}
                       </li>
                     </ul>
@@ -299,22 +315,13 @@
                 </div>
               </div>
 
-              <!-- Empty space on left (for odd index) -->
-              <div v-else class="w-5/12"></div>
+              <!-- Spacer kiri untuk odd (desktop only) -->
+              <div v-else class="hidden min-[1024px]:block min-[1024px]:w-5/12"></div>
 
-              <!-- Central Dot -->
-              <div class="timeline-connector" :class="index % 2 === 0 ? 'left' : 'right'">
+              <!-- Kartu kanan (odd) -->
+              <div v-if="index % 2 === 1" class="w-full min-[1024px]:w-5/12 min-[1024px]:pl-8">
                 <div
-                  class="w-16 h-16 rounded-full bg-[#5c7cfa] border-4 border-[#0f0f10] flex items-center justify-center shadow-lg timeline-dot relative z-10"
-                >
-                  <div class="w-3 h-3 rounded-full bg-white"></div>
-                </div>
-              </div>
-
-              <!-- Card on the right (for odd index) -->
-              <div v-if="index % 2 === 1" class="w-5/12 pl-8">
-                <div
-                  class="bg-black-900/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 glow-effect hover:border-[#5c7cfa]/30 hover:bg-[#242528] transition-all duration-300 shadow-lg hover:shadow-[#5c7cfa]/10"
+                  class="bg-[#0f0f10]/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 glow-effect hover:border-[#5c7cfa]/30 hover:bg-[#242528] transition-all duration-300 shadow-lg hover:shadow-[#5c7cfa]/10"
                 >
                   <div class="flex justify-between items-start mb-2">
                     <h4 class="text-xl font-bold text-[#e8e8ea]">{{ exp.role }}</h4>
@@ -347,18 +354,18 @@
                 </div>
               </div>
 
-              <!-- Empty space on right (for even index) -->
-              <div v-else class="w-5/12"></div>
+              <!-- Spacer kanan untuk even (desktop only) -->
+              <div v-else class="hidden min-[1024px]:block min-[1024px]:w-5/12"></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="flex justify-center items-center">
-        <p>Ready for the next chalenge</p>
+
+      <div class="flex justify-center items-center mt-10">
+        <p class="text-sm text-gray-400">Ready for the next challenge</p>
       </div>
 
-      <!-- Decorative Elements -->
-      <div class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-[#5c7cfa]/5 rounded-full blur-3xl"></div>
         <div
           class="absolute bottom-1/4 right-1/4 w-40 h-40 bg-[#4c63d2]/5 rounded-full blur-3xl"
@@ -389,7 +396,9 @@
             </div>
 
             <!-- Kanan: CardSwap (tetap DI DALAM card) -->
-            <div class="flex-shrink-0 relative overflow-visible p-6">
+            <div
+              class="hidden min-[1024px]:block w-auto flex-shrink-0 relative overflow-hidden p-6"
+            >
               <!-- Fix size agar stabil meski CardSwap belum dimount (hindari CLS) -->
               <div
                 class="relative z-10 w-96 h-72 md:w-[30rem] md:h-[22rem] flex items-center justify-center overflow-hidden transform-gpu"
@@ -607,78 +616,80 @@
       <!-- Decorative ... (biarkan) -->
     </section>
 
-    <!-- CONTACT (new) -->
-    <section id="contact" class="max-w-6xl mx-auto px-6 py-16">
-      <header class="mb-6">
-        <h3 class="text-3xl md:text-4xl font-bold leading-tight">Contact</h3>
-        <p class="text-slate-400 mt-1">
+    <!-- CONTACT (compact mobile) -->
+    <section id="contact" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 overflow-x-hidden">
+      <header class="mb-5 sm:mb-6">
+        <h3 class="text-2xl sm:text-3xl min-[1024px]:text-4xl font-bold leading-tight">Contact</h3>
+        <p class="text-slate-400 mt-1 text-sm sm:text-base">
           Have a project in mind? Let’s build something great together.
         </p>
       </header>
 
-      <div class="grid gap-6 lg:grid-cols-2">
+      <!-- 1 kolom → 2 kolom di ≥1024px -->
+      <div class="grid gap-4 sm:gap-6 min-[1024px]:grid-cols-2">
         <!-- Left: Form Card -->
         <form
           @submit.prevent="handleSubmit"
-          class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6 md:p-7"
+          class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-4 sm:p-6 min-[1024px]:p-7"
           novalidate
         >
-          <div class="grid gap-4 md:grid-cols-2">
+          <!-- 2 kolom mulai ≥640px -->
+          <div class="grid gap-3 sm:gap-4 min-[640px]:grid-cols-2">
             <!-- Name -->
             <div>
-              <label class="block text-sm mb-1.5 text-slate-300">Name</label>
+              <label class="block text-xs sm:text-sm mb-1.5 text-slate-300">Name</label>
               <input
                 v-model.trim="form.name"
                 type="text"
                 placeholder="Your name"
-                class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none"
+                class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-3 py-2.5 text-[14px] outline-none"
                 required
               />
             </div>
 
             <!-- Email -->
             <div>
-              <label class="block text-sm mb-1.5 text-slate-300">Email</label>
+              <label class="block text-xs sm:text-sm mb-1.5 text-slate-300">Email</label>
               <input
                 v-model.trim="form.email"
                 type="email"
                 placeholder="you@email.com"
-                class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none"
+                class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-3 py-2.5 text-[14px] outline-none"
                 required
               />
             </div>
           </div>
 
           <!-- Subject -->
-          <div class="mt-4">
-            <label class="block text-sm mb-1.5 text-slate-300">Subject</label>
+          <div class="mt-3 sm:mt-4">
+            <label class="block text-xs sm:text-sm mb-1.5 text-slate-300">Subject</label>
             <input
               v-model.trim="form.subject"
               type="text"
               placeholder="Project inquiry, collaboration, etc."
-              class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none"
+              class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-3 py-2.5 text-[14px] outline-none"
               required
             />
           </div>
 
           <!-- Message -->
-          <div class="mt-4">
-            <label class="block text-sm mb-1.5 text-slate-300">Message</label>
+          <div class="mt-3 sm:mt-4">
+            <label class="block text-xs sm:text-sm mb-1.5 text-slate-300">Message</label>
             <textarea
               v-model.trim="form.message"
               rows="6"
               placeholder="Tell me about your goals, timeline, and budget (if known)."
-              class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none resize-y"
+              class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-3 py-2.5 text-[14px] outline-none resize-y"
               required
-            />
+            ></textarea>
           </div>
 
-          <!-- Actions -->
-          <div class="mt-6 flex flex-wrap gap-3">
+          <!-- Actions: full width di HP, auto di ≥420px -->
+          <div class="mt-5 sm:mt-6 flex flex-wrap gap-2.5 sm:gap-3">
             <button
               type="submit"
               :disabled="sending"
-              class="px-5 py-3 rounded-xl font-medium bg-indigo-500/20 border border-indigo-400 text-indigo-200 hover:bg-indigo-500/30 hover:text-white transition disabled:opacity-60"
+              class="w-full min-[420px]:w-auto px-4 py-2.5 text-sm rounded-xl font-medium bg-indigo-500/20 border border-indigo-400 text-indigo-200 hover:bg-indigo-500/30 hover:text-white transition disabled:opacity-60"
             >
               {{ sending ? "Sending..." : "Send Message" }}
             </button>
@@ -686,31 +697,35 @@
             <button
               type="button"
               @click="emailDirect"
-              class="px-5 py-3 rounded-xl font-medium bg-slate-800/60 border border-slate-600/60 text-slate-300 hover:bg-slate-700/70 hover:text-white transition"
+              class="w-full min-[420px]:w-auto px-4 py-2.5 text-sm rounded-xl font-medium bg-slate-800/60 border border-slate-600/60 text-slate-300 hover:bg-slate-700/70 hover:text-white transition"
             >
               Email me directly
             </button>
           </div>
         </form>
 
-        <!-- Right: Info column (two stacked cards) -->
-        <div class="space-y-6">
+        <!-- Right: Info column -->
+        <div class="space-y-4 sm:space-y-6 min-[1024px]:sticky min-[1024px]:top-24 h-max">
           <!-- Contact & Availability -->
-          <div class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6 md:p-7">
-            <h4 class="text-lg font-bold mb-5">Contact & Availability</h4>
+          <div
+            class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-4 sm:p-6 min-[1024px]:p-7"
+          >
+            <h4 class="text-base sm:text-lg font-bold mb-4 sm:mb-5">Contact & Availability</h4>
 
             <!-- Email row -->
             <div
               class="flex items-center gap-3 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50"
             >
-              <div class="w-10 h-10 rounded-lg bg-slate-700/60 flex items-center justify-center">
+              <div
+                class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-700/60 flex items-center justify-center"
+              >
                 ✉️
               </div>
-              <div class="flex-1">
-                <div class="text-sm text-slate-400">Email</div>
+              <div class="flex-1 min-w-0">
+                <div class="text-xs sm:text-sm text-slate-400">Email</div>
                 <a
                   :href="`mailto:${profile.email}`"
-                  class="font-medium underline decoration-dotted"
+                  class="font-medium underline decoration-dotted break-words break-all"
                 >
                   {{ profile.email }}
                 </a>
@@ -718,57 +733,63 @@
               <button
                 type="button"
                 @click="copyEmail"
-                class="text-xs px-3 py-1.5 rounded-lg border border-slate-600/60 hover:border-indigo-400 hover:text-indigo-300 transition"
+                class="text-[11px] px-2.5 py-1.5 rounded-lg border border-slate-600/60 hover:border-indigo-400 hover:text-indigo-300 transition shrink-0"
               >
                 Copy
               </button>
             </div>
 
-            <!-- Location row (no phone shown per request) -->
+            <!-- Location row -->
             <div
               class="flex items-center gap-3 p-3 mt-3 rounded-xl bg-slate-900/50 border border-slate-700/50"
             >
-              <div class="w-10 h-10 rounded-lg bg-slate-700/60 flex items-center justify-center">
+              <div
+                class="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-700/60 flex items-center justify-center"
+              >
                 📍
               </div>
               <div>
-                <div class="text-sm text-slate-400">Location</div>
-                <div class="font-medium">{{ profile.location }}</div>
+                <div class="text-xs sm:text-sm text-slate-400">Location</div>
+                <div class="font-medium text-sm sm:text-base">{{ profile.location }}</div>
               </div>
             </div>
 
-            <p class="text-slate-400 text-sm mt-4">Typically replies within 1–2 business days.</p>
+            <p class="text-slate-400 text-xs sm:text-sm mt-3 sm:mt-4">
+              Typically replies within 1–2 business days.
+            </p>
 
             <!-- Quick links -->
-            <div class="mt-4 flex flex-wrap gap-3">
+            <div class="mt-3 sm:mt-4 flex flex-wrap gap-2.5 sm:gap-3">
               <a
                 :href="profile.linkedin"
                 target="_blank"
                 rel="noopener"
-                class="px-3 py-2 rounded-lg text-sm bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
+                class="px-2.5 py-2 text-xs sm:text-sm rounded-lg bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
                 >LinkedIn</a
               >
               <a
                 :href="profile.github"
                 target="_blank"
                 rel="noopener"
-                class="px-3 py-2 rounded-lg text-sm bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
+                class="px-2.5 py-2 text-xs sm:text-sm rounded-lg bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
                 >GitHub</a
               >
               <a
                 :href="profile.website"
                 target="_blank"
                 rel="noopener"
-                class="px-3 py-2 rounded-lg text-sm bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
+                class="px-2.5 py-2 text-xs sm:text-sm rounded-lg bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition break-words break-all"
                 >{{ cleanUrl(profile.website) }}</a
               >
             </div>
           </div>
 
           <!-- Project Fit -->
-          <div class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6 md:p-7">
-            <h4 class="text-lg font-bold mb-2">Project Fit</h4>
-            <p class="text-slate-400">
+          <div
+            class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-4 sm:p-6 min-[1024px]:p-7"
+          >
+            <h4 class="text-base sm:text-lg font-bold mb-2">Project Fit</h4>
+            <p class="text-slate-400 text-sm">
               I can help with modern web apps, WordPress, and APIs. Share your goals, scope, and
               timeline for an accurate estimate.
             </p>
