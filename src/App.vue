@@ -7,7 +7,7 @@
       </transition>
     </router-view>
     <footer class="container footer">
-      <small>© {{ new Date().getFullYear() }} JOHN WALKER</small>
+      <small>© {{ new Date().getFullYear() }} Kiki Dwi Prasetyo</small>
     </footer>
   </div>
   <FloatingActions />

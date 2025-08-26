@@ -2,14 +2,14 @@
   <main class="min-h-screen bg-[#0a0a0a] text-[#e8e8ea]">
     <TargetCursor :spin-duration="2" :hide-default-cursor="true" />
     <!-- HERO -->
-    <section class="mx-auto mt-[-30px] relative">
+    <section class="mx-auto mt-[-10px] relative" ref="heroRoot">
       <div class="w-full h-screen min-h-[600px] relative overflow-hidden">
-        <!-- Threads sebagai background -->
-        <div class="absolute inset-0 w-full h-full">
+        <!-- Threads sebagai background (mount hanya saat terlihat & tidak reduce motion) -->
+        <div class="absolute inset-0 w-full h-full" v-if="enableFancyFX && heroInView">
           <Threads
             :color="[1, 1, 1]"
-            :amplitude="1.5"
-            :distance="0.5"
+            :amplitude="1.2"
+            :distance="0.4"
             :enableMouseInteraction="false"
             class="w-full h-full"
           />
@@ -19,7 +19,6 @@
         <div
           class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 sm:px-6 lg:px-8"
         >
-          <!-- BlurText dengan ukuran responsif yang lebih baik -->
           <BlurText
             :text="profile.name"
             :delay="100"
@@ -29,9 +28,9 @@
             :threshold="0.1"
             root-margin="0px"
             :step-duration="0.35"
+            v-once
           />
 
-          <!-- TrueFocus dengan spacing yang lebih baik -->
           <div class="flex justify-center w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
             <TrueFocus
               sentence="Analytical Dedicated Adaptive"
@@ -44,6 +43,13 @@
             />
           </div>
         </div>
+
+        <!-- TargetCursor (non-essential), render hanya jika efek diizinkan -->
+        <TargetCursor
+          v-if="enableFancyFX && heroInView"
+          :spin-duration="2"
+          :hide-default-cursor="true"
+        />
       </div>
     </section>
 
@@ -361,43 +367,43 @@
     </section>
 
     <!-- PROJECTS SECTION IMPROVED - Vue.js Version -->
-    <section id="projects" class="isolate relative max-w-6xl mx-auto px-6 py-16">
+    <section id="projects" class="isolate relative max-w-6xl mx-auto px-6 py-16" ref="projectsRoot">
       <!-- Header Card with Project Name & CardSwap -->
       <div class="mb-12">
-        <!-- Main Card Container -->
+        <!-- Satu CARD membungkus judul (kiri) + CardSwap (kanan) -->
         <div
           class="rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50"
         >
           <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
-            <!-- Left Side - Project Info -->
+            <!-- Kiri: Section Title & Deskripsi -->
             <div class="flex-1 text-left p-10">
               <h3
                 class="text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent leading-tight"
               >
                 My Projects
               </h3>
-
               <p class="text-lg text-gray-400 mb-6 leading-relaxed max-w-lg">
                 A collection of carefully crafted digital experiences, showcasing modern web
                 technologies and creative solutions.
               </p>
             </div>
 
-            <!-- Right Side - CardSwap Demo -->
-            <div class="flex-shrink-0 relative overflow-visible">
-              <!-- CardSwap Container (lebih lebar/tinggi + overflow visible) -->
+            <!-- Kanan: CardSwap (tetap DI DALAM card) -->
+            <div class="flex-shrink-0 relative overflow-visible p-6">
+              <!-- Fix size agar stabil meski CardSwap belum dimount (hindari CLS) -->
               <div
                 class="relative z-10 w-96 h-72 md:w-[30rem] md:h-[22rem] flex items-center justify-center overflow-hidden transform-gpu"
               >
+                <!-- Mount CardSwap hanya saat terlihat & efek diizinkan -->
                 <CardSwap
+                  v-if="projectsInView && enableFancyFX"
                   class="relative overflow-visible"
                   :card-distance="20"
                   :vertical-distance="30"
-                  :delay="5000"
+                  :delay="7000"
                   :skew-amount="6"
                   easing="elastic"
-                  :pause-on-hover="false"
-                  @card-click="handleCardClick"
+                  :pause-on-hover="true"
                 >
                   <template #card-0>
                     <div
@@ -495,6 +501,13 @@
                     </div>
                   </template>
                 </CardSwap>
+
+                <!-- Placeholder saat CardSwap belum dimount (tetap jaga ruang di kanan) -->
+                <div
+                  v-else
+                  class="w-full h-full rounded-xl border border-white/10 bg-gradient-to-t from-[#151515] to-[#0b0b0b]"
+                  aria-hidden="true"
+                />
               </div>
             </div>
           </div>
@@ -518,20 +531,21 @@
         ></div>
       </div>
 
-      <!-- Projects Grid -->
-      <div class="grid gap-6 md:grid-cols-2">
+      <!-- Projects Grid (batas 4) -->
+      <div class="grid gap-6 md:grid-cols-2" v-memo="[showAll]">
         <div
-          v-for="project in projects"
+          v-for="(project, idx) in visibleProjects"
           :key="project.id"
-          @click="openProject(project)"
-          class="cursor-target group cursor-pointer bg-gradient-to-br from-[#1a1b20] to-[#0f0f10] border border-[#242528] rounded-xl overflow-hidden hover:border-[#5c7cfa]/50 hover:shadow-lg hover:shadow-[#5c7cfa]/20 transition-all duration-300 transform hover:-translate-y-1"
+          class="cursor-target group bg-gradient-to-br from-[#1a1b20] to-[#0f0f10] border border-[#242528] rounded-xl overflow-hidden hover:border-[#5c7cfa]/50 hover:shadow-lg hover:shadow-[#5c7cfa]/20 transition-all duration-300"
         >
           <div class="aspect-video overflow-hidden">
             <img
               :src="project.thumb"
               :alt="project.title"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 will-change-transform"
               loading="lazy"
+              decoding="async"
+              :fetchpriority="idx < 2 ? 'high' : 'low'"
             />
           </div>
           <div class="p-6">
@@ -539,6 +553,7 @@
               {{ project.title }}
             </h4>
             <p class="text-slate-400 text-sm mb-4">{{ project.subtitle }}</p>
+
             <div class="flex flex-wrap gap-2">
               <span
                 v-for="tag in project.tags"
@@ -548,106 +563,215 @@
                 {{ tag }}
               </span>
             </div>
+
+            <!-- Actions -->
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a
+                :href="project.repo || profile.github"
+                target="_blank"
+                rel="noopener"
+                @click.stop
+                class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-indigo-400/60 text-indigo-300 hover:text-white hover:bg-indigo-500/15 hover:border-indigo-400 transition"
+              >
+                <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.31.76-1.61-2.66-.31-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 2.99-.4s2.03.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"
+                  />
+                </svg>
+                View Source
+              </a>
+              <a
+                :href="project.repo || profile.github"
+                target="_blank"
+                rel="noopener"
+                @click.stop
+                class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-600/60 text-slate-300 hover:text-white hover:bg-slate-700/50 hover:border-slate-500 transition"
+              >
+                Details
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Decorative Elements -->
-      <div class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-[#5c7cfa]/5 rounded-full blur-3xl"></div>
-        <div
-          class="absolute bottom-1/4 right-1/4 w-40 h-40 bg-[#4c63d2]/5 rounded-full blur-3xl"
-        ></div>
+      <!-- View All / View Less -->
+      <div v-if="projects.length > 4" class="mt-8 flex justify-center">
+        <button
+          @click="showAll = !showAll"
+          class="cursor-target inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-[#3a3a3a] text-white bg-[#17181a] hover:bg-[#1f2023] hover:border-[#5c7cfa]/60 transition"
+        >
+          <span v-text="showAll ? 'View Less' : 'View All Projects'"></span>
+        </button>
       </div>
+
+      <!-- Decorative ... (biarkan) -->
     </section>
 
-    <!-- CONTACT -->
-    <section class="max-w-6xl mx-auto px-6 py-8">
-      <h3 class="text-2xl font-bold mb-6">Contact</h3>
+    <!-- CONTACT (new) -->
+    <section id="contact" class="max-w-6xl mx-auto px-6 py-16">
+      <header class="mb-6">
+        <h3 class="text-3xl md:text-4xl font-bold leading-tight">Contact</h3>
+        <p class="text-slate-400 mt-1">
+          Have a project in mind? Let’s build something great together.
+        </p>
+      </header>
 
-      <div
-        class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-2xl p-8"
-      >
-        <div class="grid gap-8 lg:grid-cols-2">
-          <div>
-            <h4 class="text-xl font-bold mb-2">Let's build something great.</h4>
-            <p class="text-slate-400 mb-6">
-              Open to freelance & full-time roles. Preferably remote/hybrid.
-            </p>
-            <div class="flex flex-wrap gap-3">
-              <a
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-indigo-400 bg-indigo-400/10 text-indigo-400 hover:bg-indigo-400/20 transition-all duration-200 font-medium"
-                :href="`mailto:${profile.email}`"
-              >
-                Email me
-              </a>
-              <a
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-slate-600/50 bg-slate-700/50 text-slate-300 hover:bg-slate-700/70 hover:border-slate-500 transition-all duration-200"
-                :href="profile.linkedin"
-                target="_blank"
-                rel="noopener"
-              >
-                LinkedIn
-              </a>
-              <a
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-slate-600/50 bg-slate-700/50 text-slate-300 hover:bg-slate-700/70 hover:border-slate-500 transition-all duration-200"
-                :href="profile.github"
-                target="_blank"
-                rel="noopener"
-              >
-                GitHub
-              </a>
+      <div class="grid gap-6 lg:grid-cols-2">
+        <!-- Left: Form Card -->
+        <form
+          @submit.prevent="handleSubmit"
+          class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6 md:p-7"
+          novalidate
+        >
+          <div class="grid gap-4 md:grid-cols-2">
+            <!-- Name -->
+            <div>
+              <label class="block text-sm mb-1.5 text-slate-300">Name</label>
+              <input
+                v-model.trim="form.name"
+                type="text"
+                placeholder="Your name"
+                class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none"
+                required
+              />
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-sm mb-1.5 text-slate-300">Email</label>
+              <input
+                v-model.trim="form.email"
+                type="email"
+                placeholder="you@email.com"
+                class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none"
+                required
+              />
             </div>
           </div>
 
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div
-              class="flex items-center gap-3 p-4 rounded-xl border border-slate-600/50 bg-slate-700/30"
+          <!-- Subject -->
+          <div class="mt-4">
+            <label class="block text-sm mb-1.5 text-slate-300">Subject</label>
+            <input
+              v-model.trim="form.subject"
+              type="text"
+              placeholder="Project inquiry, collaboration, etc."
+              class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none"
+              required
+            />
+          </div>
+
+          <!-- Message -->
+          <div class="mt-4">
+            <label class="block text-sm mb-1.5 text-slate-300">Message</label>
+            <textarea
+              v-model.trim="form.message"
+              rows="6"
+              placeholder="Tell me about your goals, timeline, and budget (if known)."
+              class="w-full rounded-xl bg-[#16181c] border border-slate-700/60 focus:border-indigo-400/70 focus:ring-0 px-4 py-3 text-sm outline-none resize-y"
+              required
+            />
+          </div>
+
+          <!-- Actions -->
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button
+              type="submit"
+              :disabled="sending"
+              class="px-5 py-3 rounded-xl font-medium bg-indigo-500/20 border border-indigo-400 text-indigo-200 hover:bg-indigo-500/30 hover:text-white transition disabled:opacity-60"
             >
-              <div
-                class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-600/50 text-lg"
+              {{ sending ? "Sending..." : "Send Message" }}
+            </button>
+
+            <button
+              type="button"
+              @click="emailDirect"
+              class="px-5 py-3 rounded-xl font-medium bg-slate-800/60 border border-slate-600/60 text-slate-300 hover:bg-slate-700/70 hover:text-white transition"
+            >
+              Email me directly
+            </button>
+          </div>
+        </form>
+
+        <!-- Right: Info column (two stacked cards) -->
+        <div class="space-y-6">
+          <!-- Contact & Availability -->
+          <div class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6 md:p-7">
+            <h4 class="text-lg font-bold mb-5">Contact & Availability</h4>
+
+            <!-- Email row -->
+            <div
+              class="flex items-center gap-3 p-3 rounded-xl bg-slate-900/50 border border-slate-700/50"
+            >
+              <div class="w-10 h-10 rounded-lg bg-slate-700/60 flex items-center justify-center">
+                ✉️
+              </div>
+              <div class="flex-1">
+                <div class="text-sm text-slate-400">Email</div>
+                <a
+                  :href="`mailto:${profile.email}`"
+                  class="font-medium underline decoration-dotted"
+                >
+                  {{ profile.email }}
+                </a>
+              </div>
+              <button
+                type="button"
+                @click="copyEmail"
+                class="text-xs px-3 py-1.5 rounded-lg border border-slate-600/60 hover:border-indigo-400 hover:text-indigo-300 transition"
               >
+                Copy
+              </button>
+            </div>
+
+            <!-- Location row (no phone shown per request) -->
+            <div
+              class="flex items-center gap-3 p-3 mt-3 rounded-xl bg-slate-900/50 border border-slate-700/50"
+            >
+              <div class="w-10 h-10 rounded-lg bg-slate-700/60 flex items-center justify-center">
                 📍
               </div>
-              <span class="text-sm">{{ profile.location }}</span>
-            </div>
-            <div
-              class="flex items-center gap-3 p-4 rounded-xl border border-slate-600/50 bg-slate-700/30"
-            >
-              <div
-                class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-600/50 text-lg"
-              >
-                🔗
+              <div>
+                <div class="text-sm text-slate-400">Location</div>
+                <div class="font-medium">{{ profile.location }}</div>
               </div>
+            </div>
+
+            <p class="text-slate-400 text-sm mt-4">Typically replies within 1–2 business days.</p>
+
+            <!-- Quick links -->
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a
+                :href="profile.linkedin"
+                target="_blank"
+                rel="noopener"
+                class="px-3 py-2 rounded-lg text-sm bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
+                >LinkedIn</a
+              >
+              <a
+                :href="profile.github"
+                target="_blank"
+                rel="noopener"
+                class="px-3 py-2 rounded-lg text-sm bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
+                >GitHub</a
+              >
               <a
                 :href="profile.website"
                 target="_blank"
                 rel="noopener"
-                class="text-sm border-b border-dashed border-slate-600/50 hover:border-indigo-400 hover:text-indigo-400 transition-colors"
+                class="px-3 py-2 rounded-lg text-sm bg-slate-900/50 border border-slate-700/60 hover:border-indigo-400 hover:text-indigo-300 transition"
+                >{{ cleanUrl(profile.website) }}</a
               >
-                {{ cleanUrl(profile.website) }}
-              </a>
             </div>
-            <div
-              class="flex items-center gap-3 p-4 rounded-xl border border-slate-600/50 bg-slate-700/30"
-            >
-              <div
-                class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-600/50 text-lg"
-              >
-                📞
-              </div>
-              <span class="text-sm">{{ profile.phone }}</span>
-            </div>
-            <div
-              class="flex items-center gap-3 p-4 rounded-xl border border-slate-600/50 bg-slate-700/30"
-            >
-              <div
-                class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-600/50 text-lg"
-              >
-                ✉️
-              </div>
-              <span class="text-sm">{{ profile.email }}</span>
-            </div>
+          </div>
+
+          <!-- Project Fit -->
+          <div class="rounded-2xl bg-slate-800/40 border border-slate-700/50 p-6 md:p-7">
+            <h4 class="text-lg font-bold mb-2">Project Fit</h4>
+            <p class="text-slate-400">
+              I can help with modern web apps, WordPress, and APIs. Share your goals, scope, and
+              timeline for an accurate estimate.
+            </p>
           </div>
         </div>
       </div>
@@ -658,14 +782,14 @@
       <div class="grid gap-6 md:grid-cols-2">
         <div class="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6">
           <h4 class="font-bold mb-2">Contact and Support</h4>
-          <p class="text-slate-400 mb-2">Optimize your dev process — 123d.one</p>
+          <p class="text-slate-400 mb-2">For work inquiries & collaboration</p>
           <p class="text-slate-400">
-            Send feedback to
+            Reach me at
             <a
-              href="mailto:support@123d.one"
+              :href="`mailto:${profile.email}`"
               class="text-indigo-400 border-b border-dashed border-indigo-400/50 hover:border-indigo-400 transition-colors"
             >
-              support@123d.one
+              {{ profile.email }}
             </a>
           </p>
         </div>
@@ -673,25 +797,28 @@
           <h4 class="font-bold mb-4">Follow</h4>
           <div class="flex flex-wrap gap-4">
             <a
-              href="#"
-              @click.prevent
+              :href="profile.github"
+              target="_blank"
+              rel="noopener"
               class="text-slate-400 border-b border-dashed border-slate-600/50 hover:border-indigo-400 hover:text-indigo-400 transition-colors"
             >
-              Twitter
+              GitHub
             </a>
             <a
-              href="#"
-              @click.prevent
+              :href="profile.instagram"
+              target="_blank"
+              rel="noopener"
               class="text-slate-400 border-b border-dashed border-slate-600/50 hover:border-indigo-400 hover:text-indigo-400 transition-colors"
             >
               Instagram
             </a>
             <a
-              href="#"
-              @click.prevent
+              :href="profile.linkedin"
+              target="_blank"
+              rel="noopener"
               class="text-slate-400 border-b border-dashed border-slate-600/50 hover:border-indigo-400 hover:text-indigo-400 transition-colors"
             >
-              Dribbble
+              LinkedIn
             </a>
           </div>
         </div>
@@ -701,45 +828,76 @@
 </template>
 
 <script setup>
-import { reactive, ref, computed } from "vue";
-import BlurText from "@/Animations/BlurText/BlurText.vue";
-import Threads from "@/Backgrounds/Threads/Threads.vue";
-import TrueFocus from "@/Animations/TrueFocus/TrueFocus.vue";
-import TargetCursor from "@/Animations/TargetCursor/TargetCursor.vue";
-import ProfileCard from "@/components/ProfileCard/ProfileCard.vue";
-import CardSwap from "@/components/CardSwap/CardSwap.vue";
+import { reactive, ref, computed, onMounted, onBeforeUnmount, defineAsyncComponent } from "vue";
+
+// === Lazy-load heavy components (kurangi beban initial render) ===
+const BlurText = defineAsyncComponent(() => import("@/Animations/BlurText/BlurText.vue"));
+const Threads = defineAsyncComponent(() => import("@/Backgrounds/Threads/Threads.vue"));
+const TrueFocus = defineAsyncComponent(() => import("@/Animations/TrueFocus/TrueFocus.vue"));
+const TargetCursor = defineAsyncComponent(() =>
+  import("@/Animations/TargetCursor/TargetCursor.vue")
+);
+const ProfileCard = defineAsyncComponent(() => import("@/components/ProfileCard/ProfileCard.vue"));
+const CardSwap = defineAsyncComponent(() => import("@/components/CardSwap/CardSwap.vue"));
+
+// ===== Utilities =====
+const enableFancyFX = ref(true);
+onMounted(() => {
+  // Matikan efek berat untuk user dengan prefers-reduced-motion
+  enableFancyFX.value = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+});
+
+// IntersectionObserver untuk unmount animasi saat offscreen
+const heroRoot = ref(null);
+const projectsRoot = ref(null);
+const heroInView = ref(true);
+const projectsInView = ref(false);
+
+let ioHero, ioProjects;
+onMounted(() => {
+  ioHero = new IntersectionObserver(
+    (entries) => (heroInView.value = entries[0]?.isIntersecting ?? true),
+    { threshold: 0.2 }
+  );
+  if (heroRoot.value) ioHero.observe(heroRoot.value);
+
+  ioProjects = new IntersectionObserver(
+    (entries) => (projectsInView.value = entries[0]?.isIntersecting ?? false),
+    { threshold: 0.15 }
+  );
+  if (projectsRoot.value) ioProjects.observe(projectsRoot.value);
+});
+onBeforeUnmount(() => {
+  ioHero?.disconnect?.();
+  ioProjects?.disconnect?.();
+});
 
 // Function to download resume
 const downloadResume = () => {
   try {
-    // Create a link element
     const link = document.createElement("a");
-    link.href = "/src/assets/resume.pdf"; // Path to your resume file
-    link.download = "Kiki-Dwi-Prasetyo-Resume.pdf"; // Filename when downloaded
-
-    // Append to body, click, and remove
+    link.href = "/src/assets/resume.pdf";
+    link.download = "Kiki-Dwi-Prasetyo-Resume.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    console.log("Resume download initiated");
-  } catch (error) {
-    console.error("Error downloading resume:", error);
-    // Fallback: open in new tab
+  } catch {
     window.open("/src/assets/resume.pdf", "_blank");
   }
 };
 
+// ===== Profile & Sosmed (disesuaikan) =====
 const profile = reactive({
   name: "Kiki Dwi Prasetyo",
   photo:
     "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=480&auto=format&fit=crop",
-  location: "Bandung, Indonesia",
-  website: "https://www.123d.one",
-  phone: "+62-812-3456-7890",
-  email: "hello@123d.one",
-  linkedin: "https://www.linkedin.com/in/johnwalker",
-  github: "https://github.com/johnwalker",
+  location: "Pemalang, Jawa Tengah",
+  website: "https://www.kikidwp-portofolio.my.id",
+  // phone dihapus dari UI (tidak dipakai)
+  email: "kikidprasetyo29@gmail.com",
+  linkedin: "https://www.linkedin.com/in/kikidwi/",
+  github: "https://github.com/kikidwi",
+  instagram: "https://www.instagram.com/kikii.dwp/",
 });
 
 const skillTabs = ["Bahasa Pemrograman", "Software"];
@@ -812,83 +970,184 @@ const skills = {
 const activeTab = ref("Bahasa Pemrograman");
 const filteredSkills = computed(() => skills[activeTab.value]);
 
+// =================== EXPERIENCE ===================
 const experiences = [
   {
     id: 1,
-    role: "Frontend Developer",
-    company: "Journal1z",
+    role: "Web Developer",
+    company: "Journal1z Advertising",
     location: "Remote",
-    period: "Mar 2024 – Present",
+    period: "Jul 2024 – Present",
     bullets: [
-      "Built landing pages & optimized Core Web Vitals.",
-      "Indexed website via Google Search Console & improved SEO.",
+      "Develop & maintain Journal1z website; build landing page & product catalog (Figma → WordPress).",
+      "Index site via Google Search Console, update articles weekly, ensure performance & uptime.",
     ],
-    stack: ["Vue", "WordPress", "Elementor", "SEO"],
+    stack: ["WordPress", "Elementor", "Figma", "SEO", "Google Search Console"],
   },
   {
     id: 2,
-    role: "Full-stack Developer (Contract)",
-    company: "PT. Semesta Teknologi Terpadu",
-    location: "Jakarta",
-    period: "Jan 2023 – Feb 2024",
+    role: "Web Developer Intern",
+    company: "Research Center of Human Centric Engineering (Telkom Univ.)",
+    location: "Bandung",
+    period: "Jul 2023 – Oct 2023",
     bullets: [
-      "Developed company profile & e-commerce features.",
-      "Integrated payments and optimized admin workflows.",
+      "Built satisfaction survey website (login via email, fill survey, visualize results).",
+      "Implemented role-based access (admin/user) & designed MySQL schema.",
     ],
-    stack: ["Laravel", "MySQL", "Tailwind", "QRIS"],
+    stack: ["HTML", "CSS", "JavaScript", "Figma", "MySQL"],
   },
   {
     id: 3,
-    role: "Android & ML (Project)",
-    company: "Independent",
-    location: "Bandung",
-    period: "2022 – 2023",
+    role: "Mobile Development (Student)",
+    company: "Bangkit Academy by Google, GoTo, Traveloka",
+    location: "Remote",
+    period: "Feb 2023 – Jun 2023",
     bullets: [
-      "Built animal sound classifier (TensorFlow Lite).",
-      "Implemented on-device inference with Kotlin.",
+      "Completed MD path (score 88.64, 100% attendance); built GitHub Users & StoryApp.",
+      "Capstone: ML-based waste sorting app (on-device inference).",
     ],
-    stack: ["Kotlin", "TFLite"],
+    stack: ["Kotlin", "Android", "TensorFlow Lite"],
   },
 ];
 
+// =================== PROJECTS ===================
+// Tambahkan properti `repo` untuk tombol GitHub.
+// Jika belum ada repo spesifik, fallback ke profil GitHub.
+const gh = "https://github.com/kikidwi";
 const projects = [
   {
     id: 1,
-    title: "Universal UI Kit (Web)",
-    subtitle: "The most universal UI kit for Figma",
-    tags: ["UX Design", "UI Design", "Motion design", "Art Direction"],
-    thumb:
-      "https://images.unsplash.com/photo-1559027615-47f13b833b5f?q=80&w=1200&auto=format&fit=crop",
+    title: "Company Profile Website Journal1z Adv",
+    subtitle: "Web development",
+    tags: ["WordPress", "Landing Page"],
+    thumb: "src/assets/images/projects/web-9.png",
+    repo: gh,
   },
   {
     id: 2,
-    title: "Universal Data Visualization",
-    subtitle: "Charts and infographics constructor",
-    tags: ["Web Design", "Branding", "Motion design"],
-    thumb:
-      "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1200&auto=format&fit=crop",
+    title: "Landing Page PT. Semesta Teknologi Terpadu",
+    subtitle: "Web development",
+    tags: ["WordPress", "Landing Page"],
+    thumb: "src/assets/images/projects/web-10.png",
+    repo: gh,
   },
   {
     id: 3,
-    title: "Universal Icon Set",
-    subtitle: "1900+ high-quality vector icons",
-    tags: ["UI Design", "Motion design", "Web Design"],
-    thumb:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop",
+    title: "Landing Page Restaurant Mangankuy",
+    subtitle: "Web development",
+    tags: ["HTML", "CSS", "JavaScript"],
+    thumb: "src/assets/images/projects/web-11.png",
+    repo: gh,
   },
   {
     id: 4,
-    title: "Universal Project Management",
-    subtitle: "Take control of your projects",
-    tags: ["UX Design", "UI Design", "Product Design"],
-    thumb:
-      "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1200&auto=format&fit=crop",
+    title: "Humic Dashboard Survey",
+    subtitle: "Web development",
+    tags: ["Dashboard", "Survey", "Data Viz"],
+    thumb: "src/assets/images/projects/web-1.png",
+    repo: gh,
+  },
+  {
+    id: 5,
+    title: "Gary's Florists",
+    subtitle: "Web development",
+    tags: ["Static Site"],
+    thumb: "src/assets/images/projects/web-2.png",
+    repo: gh,
+  },
+  {
+    id: 6,
+    title: "Ellie's Fashion Blog",
+    subtitle: "Web development",
+    tags: ["Blog", "Static Site"],
+    thumb: "src/assets/images/projects/web-3.png",
+    repo: gh,
+  },
+  {
+    id: 7,
+    title: "Cat Facts",
+    subtitle: "Web development",
+    tags: ["API", "Vanilla JS"],
+    thumb: "src/assets/images/projects/web-4.png",
+    repo: gh,
+  },
+  {
+    id: 8,
+    title: "Valorant Agent Web Clone",
+    subtitle: "Web development",
+    tags: ["API", "Clone"],
+    thumb: "src/assets/images/projects/web-5.png",
+    repo: gh,
+  },
+  {
+    id: 9,
+    title: "Fitness Flow",
+    subtitle: "Web development",
+    tags: ["Landing Page"],
+    thumb: "src/assets/images/projects/web-6.png",
+    repo: gh,
+  },
+  {
+    id: 10,
+    title: "Simple Notes",
+    subtitle: "Web development",
+    tags: ["Laravel", "CRUD"],
+    thumb: "src/assets/images/projects/web-7.png",
+    repo: gh,
+  },
+  {
+    id: 11,
+    title: "Creative Agency",
+    subtitle: "Web development",
+    tags: ["Landing Page"],
+    thumb: "src/assets/images/projects/web-8.png",
+    repo: gh,
+  },
+  {
+    id: 12,
+    title: "Rubist (Rubbish Sorting Assistant)",
+    subtitle: "Mobile development",
+    tags: ["Android", "ML"],
+    thumb: "src/assets/images/projects/app-1.png",
+    repo: gh,
+  },
+  {
+    id: 13,
+    title: "Course Schedule",
+    subtitle: "Mobile development",
+    tags: ["Android"],
+    thumb: "src/assets/images/projects/app-2.png",
+    repo: gh,
+  },
+  {
+    id: 14,
+    title: "Todo List App",
+    subtitle: "Mobile development",
+    tags: ["Android"],
+    thumb: "src/assets/images/projects/app-3.png",
+    repo: gh,
+  },
+  {
+    id: 15,
+    title: "Catalog Produk Journal1z.com",
+    subtitle: "Mobile design",
+    tags: ["Figma", "Design"],
+    thumb: "src/assets/images/projects/wd-1.png",
+    repo: gh,
+  },
+  {
+    id: 16,
+    title: "Landing Page Journal1z.com (Design)",
+    subtitle: "Mobile design",
+    tags: ["Figma", "Design"],
+    thumb: "src/assets/images/projects/wd-2.png",
+    repo: gh,
   },
 ];
 
-function openProject(p) {
-  alert(`Open project: ${p.title}`);
-}
+// Batasi render awal 4 item + tombol view all
+const showAll = ref(false);
+const visibleProjects = computed(() => (showAll.value ? projects : projects.slice(0, 4)));
 
 function cleanUrl(u) {
   try {
@@ -898,7 +1157,57 @@ function cleanUrl(u) {
     return u;
   }
 }
+
+// --- Contact form state & helpers ---
+const form = reactive({
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+});
+const sending = ref(false);
+
+function emailDirect() {
+  // kirim email langsung dengan prefill
+  const s = encodeURIComponent(form.subject || "Project inquiry from portfolio");
+  const body = encodeURIComponent(
+    `Hi Kiki,%0D%0A%0D%0A${form.message || ""}%0D%0A%0D%0A— ${form.name || "Anonymous"} (${
+      form.email || "no email"
+    })`
+  );
+  window.location.href = `mailto:${profile.email}?subject=${s}&body=${body}`;
+}
+
+async function handleSubmit() {
+  // validasi ringan
+  if (!form.name || !form.email || !form.subject || !form.message) {
+    alert("Please fill in all fields.");
+    return;
+  }
+  // karena belum ada backend, fallback ke mailto
+  sending.value = true;
+  try {
+    emailDirect();
+  } finally {
+    sending.value = false;
+  }
+}
+
+async function copyEmail() {
+  try {
+    await navigator.clipboard.writeText(profile.email);
+  } catch {
+    // fallback
+    const ta = document.createElement("textarea");
+    ta.value = profile.email;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+}
 </script>
+
 <style scoped>
 @keyframes lineGrow {
   from {

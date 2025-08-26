@@ -1,7 +1,7 @@
 <template>
   <main class="max-w-6xl mx-auto px-6 py-8 mt-12 text-[var(--text-primary)]" :style="styleVars">
     <!-- Header -->
-    <section class="mb-6">
+    <section class="mb-6 mt-10">
       <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Contact</h1>
       <p class="text-[var(--text-secondary)] mt-1">
         Have a project in mind? Let’s build something great together.
@@ -10,7 +10,7 @@
 
     <!-- Content -->
     <section class="grid gap-6 lg:grid-cols-2">
-      <!-- Form -->
+      <!-- Form (tetap ada) -->
       <div
         class="rounded-2xl p-6 lg:p-7 border bg-[var(--bg-muted)] border-[var(--border-primary)]"
       >
@@ -97,6 +97,7 @@
                 :style="fieldBgStyle"
                 placeholder="Tell me about your goals, timeline, and budget (if known)."
               ></textarea>
+
               <p v-if="errors.message" class="mt-1 text-xs text-red-400">{{ errors.message }}</p>
             </div>
           </div>
@@ -140,53 +141,39 @@
         </form>
       </div>
 
-      <!-- Info -->
+      <!-- Info (disamakan dengan Home, tanpa phone) -->
       <aside class="grid gap-4">
-        <!-- Card: Contact details -->
+        <!-- Contact & Availability -->
         <div class="rounded-2xl p-6 border bg-[var(--bg-muted)] border-[var(--border-primary)]">
           <h3 class="font-semibold mb-3">Contact & Availability</h3>
-          <div class="grid gap-3">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 grid place-items-center rounded-lg" :style="iconBgStyle">
-                ✉️
-              </div>
-              <div class="flex-1">
-                <div class="text-sm text-[var(--text-secondary)]">Email</div>
-                <div class="flex items-center gap-2">
-                  <a
-                    :href="`mailto:${profile.email}`"
-                    class="underline underline-offset-4 decoration-dotted hover:text-[var(--accent-primary)]"
-                  >
-                    {{ profile.email }}
-                  </a>
-                  <button
-                    @click="copy(profile.email)"
-                    class="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                  >
-                    Copy
-                  </button>
-                </div>
+
+          <!-- Email -->
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 grid place-items-center rounded-lg" :style="iconBgStyle">✉️</div>
+            <div class="flex-1">
+              <div class="text-sm text-[var(--text-secondary)]">Email</div>
+              <div class="flex items-center gap-2">
+                <a
+                  :href="`mailto:${profile.email}`"
+                  class="underline underline-offset-4 decoration-dotted hover:text-[var(--accent-primary)]"
+                  >{{ profile.email }}</a
+                >
+                <button
+                  @click="copy(profile.email)"
+                  class="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                >
+                  Copy
+                </button>
               </div>
             </div>
+          </div>
 
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 grid place-items-center rounded-lg" :style="iconBgStyle">
-                📞
-              </div>
-              <div class="flex-1">
-                <div class="text-sm text-[var(--text-secondary)]">Phone</div>
-                <div>{{ profile.phone }}</div>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 grid place-items-center rounded-lg" :style="iconBgStyle">
-                📍
-              </div>
-              <div class="flex-1">
-                <div class="text-sm text-[var(--text-secondary)]">Location</div>
-                <div>{{ profile.location }}</div>
-              </div>
+          <!-- Location -->
+          <div class="flex items-center gap-3 mt-3">
+            <div class="w-10 h-10 grid place-items-center rounded-lg" :style="iconBgStyle">📍</div>
+            <div class="flex-1">
+              <div class="text-sm text-[var(--text-secondary)]">Location</div>
+              <div>{{ profile.location }}</div>
             </div>
           </div>
 
@@ -194,35 +181,33 @@
             Typically replies within 1–2 business days.
           </p>
 
+          <!-- Quick links -->
           <div class="mt-4 flex flex-wrap gap-3">
             <a
               :href="profile.linkedin"
               target="_blank"
               rel="noopener"
               class="px-3 py-2 rounded-lg border text-sm border-[var(--border-primary)] bg-[var(--bg-muted)] hover:bg-[var(--bg-card)]"
+              >LinkedIn</a
             >
-              LinkedIn
-            </a>
             <a
               :href="profile.github"
               target="_blank"
               rel="noopener"
               class="px-3 py-2 rounded-lg border text-sm border-[var(--border-primary)] bg-[var(--bg-muted)] hover:bg-[var(--bg-card)]"
+              >GitHub</a
             >
-              GitHub
-            </a>
             <a
               :href="profile.website"
               target="_blank"
               rel="noopener"
               class="px-3 py-2 rounded-lg border text-sm border-[var(--border-primary)] bg-[var(--bg-muted)] hover:bg-[var(--bg-card)]"
+              >{{ cleanUrl(profile.website) }}</a
             >
-              {{ cleanUrl(profile.website) }}
-            </a>
           </div>
         </div>
 
-        <!-- Card: Small note -->
+        <!-- Project Fit -->
         <div class="rounded-2xl p-6 border bg-[var(--bg-muted)] border-[var(--border-primary)]">
           <h3 class="font-semibold mb-2">Project Fit</h3>
           <p class="text-[var(--text-secondary)] text-sm">
@@ -238,14 +223,13 @@
 <script setup>
 import { reactive, ref, computed } from "vue";
 
-/* Palette dari kamu */
+/* Palette */
 const colors = reactive({
   background: { primary: "#0a0a0a", card: "#242528", muted: "#1a1b20" },
   text: { primary: "#e8e8ea", secondary: "#a6adbb", muted: "#6b7280" },
   accent: { primary: "#5c7cfa", secondary: "#4c63d2", light: "#b5aaff" },
   border: { primary: "#3a3a3a", muted: "#6b728050", light: "#ffffff10", accent: "#ffffff20" },
 });
-
 const styleVars = computed(() => ({
   "--bg-primary": colors.background.primary,
   "--bg-card": colors.background.card,
@@ -262,26 +246,22 @@ const styleVars = computed(() => ({
   "--border-accent": colors.border.accent,
 }));
 
-/* Background transparan untuk input/icon (setara /40) */
-const fieldBgStyle = {
-  background: "color-mix(in srgb, var(--bg-primary) 40%, transparent)",
-};
-const iconBgStyle = {
-  background: "color-mix(in srgb, var(--bg-primary) 40%, transparent)",
-};
-/* Tint “accent/10%” utk tombol utama */
+/* Transparansi input & icon */
+const fieldBgStyle = { background: "color-mix(in srgb, var(--bg-primary) 40%, transparent)" };
+const iconBgStyle = { background: "color-mix(in srgb, var(--bg-primary) 40%, transparent)" };
 const chipActiveStyle = {
   background: "color-mix(in srgb, var(--accent-primary) 12%, transparent)",
 };
 
+/* >>> Sinkron dengan Home <<< */
 const profile = reactive({
-  name: "JOHN WALKER",
-  location: "Bandung, Indonesia",
-  website: "https://www.123d.one",
-  phone: "+62-812-3456-7890",
-  email: "hello@123d.one",
-  linkedin: "https://www.linkedin.com/in/johnwalker",
-  github: "https://github.com/johnwalker",
+  name: "Kiki Dwi Prasetyo",
+  location: "Pemalang, Jawa Tengah",
+  website: "https://www.kikidwp-portofolio.my.id",
+  email: "kikidprasetyo29@gmail.com",
+  linkedin: "https://www.linkedin.com/in/kikidwi/",
+  github: "https://github.com/kikidwi",
+  instagram: "https://www.instagram.com/kikii.dwp/",
 });
 
 const form = reactive({ name: "", email: "", subject: "", message: "" });
@@ -311,12 +291,13 @@ function validate() {
 
 async function submit() {
   status.value = "";
-  if (hp.value) return;
+  if (hp.value) return; // honeypot
   if (!validate()) return;
 
   loading.value = true;
   try {
-    await new Promise((r) => setTimeout(r, 900));
+    // fallback: simulasi kirim (hubungkan ke Formspree/EmailJS kalau perlu)
+    await new Promise((r) => setTimeout(r, 800));
     status.value = "success";
     Object.assign(form, { name: "", email: "", subject: "", message: "" });
   } catch (e) {
