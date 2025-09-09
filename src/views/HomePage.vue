@@ -563,7 +563,7 @@
             </h4>
             <p class="text-slate-400 text-sm mb-4">{{ project.subtitle }}</p>
 
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 mb-4">
               <span
                 v-for="tag in project.tags"
                 :key="tag"
@@ -575,6 +575,26 @@
 
             <!-- Actions -->
             <div class="mt-4 flex flex-wrap gap-3">
+              <button
+                @click="openProjectDetail(project)"
+                class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-emerald-400/60 text-emerald-300 hover:text-white hover:bg-emerald-500/15 hover:border-emerald-400 transition"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+                View Details
+              </button>
               <a
                 :href="project.repo || profile.github"
                 target="_blank"
@@ -590,13 +610,22 @@
                 View Source
               </a>
               <a
-                :href="project.repo || profile.github"
+                v-if="project.demo"
+                :href="project.demo"
                 target="_blank"
                 rel="noopener"
                 @click.stop
                 class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-600/60 text-slate-300 hover:text-white hover:bg-slate-700/50 hover:border-slate-500 transition"
               >
-                Details
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+                Live Demo
               </a>
             </div>
           </div>
@@ -613,7 +642,151 @@
         </button>
       </div>
 
-      <!-- Decorative ... (biarkan) -->
+      <!-- Project Detail Modal -->
+      <div
+        v-if="selectedProject"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+        @click="closeProjectDetail"
+      >
+        <div
+          class="relative max-w-4xl w-full max-h-[88vh] bg-[#0f0f10] border border-slate-700/50 rounded-xl overflow-hidden mt-[80px]"
+          @click.stop
+        >
+          <!-- Close Button -->
+          <button
+            @click="closeProjectDetail"
+            class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-slate-800/80 border border-slate-600/50 text-slate-400 hover:text-white hover:bg-slate-700 transition flex items-center justify-center"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          <div class="overflow-y-auto max-h-[90vh]">
+            <!-- Hero Image -->
+            <div class="aspect-video overflow-hidden">
+              <img
+                :src="selectedProject.thumb"
+                :alt="selectedProject.title"
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 sm:p-8">
+              <!-- Header -->
+              <div class="mb-6">
+                <div class="flex items-start justify-between mb-4">
+                  <div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">
+                      {{ selectedProject.title }}
+                    </h3>
+                    <p class="text-slate-400">{{ selectedProject.subtitle }}</p>
+                  </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span
+                    v-for="tag in selectedProject.tags"
+                    :key="tag"
+                    class="text-xs px-3 py-1.5 rounded-full border border-slate-600/50 text-slate-300 bg-slate-700/50"
+                  >
+                    {{ tag }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="mb-6">
+                <h4 class="text-lg font-semibold text-white mb-3">Project Overview</h4>
+                <p class="text-slate-300 leading-relaxed">
+                  {{ selectedProject.description }}
+                </p>
+              </div>
+
+              <!-- Features -->
+              <div v-if="selectedProject.features && selectedProject.features.length" class="mb-6">
+                <h4 class="text-lg font-semibold text-white mb-3">Key Features</h4>
+                <ul class="space-y-2">
+                  <li
+                    v-for="feature in selectedProject.features"
+                    :key="feature"
+                    class="flex items-start gap-3 text-slate-300"
+                  >
+                    <div class="w-1.5 h-1.5 bg-[#5c7cfa] rounded-full mt-2 shrink-0"></div>
+                    {{ feature }}
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Tech Stack -->
+              <div
+                v-if="selectedProject.techStack && selectedProject.techStack.length"
+                class="mb-8"
+              >
+                <h4 class="text-lg font-semibold text-white mb-3">Tech Stack</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    v-for="tech in selectedProject.techStack"
+                    :key="tech"
+                    class="px-3 py-1.5 text-sm rounded-lg border border-slate-600/50 text-slate-300 bg-slate-800/50"
+                  >
+                    {{ tech }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex flex-wrap gap-3">
+                <a
+                  :href="selectedProject.repo || profile.github"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-indigo-400/60 text-indigo-300 hover:text-white hover:bg-indigo-500/15 hover:border-indigo-400 transition"
+                >
+                  <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor">
+                    <path
+                      d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.31.76-1.61-2.66-.31-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 2.99-.4s2.03.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"
+                    />
+                  </svg>
+                  View Source Code
+                </a>
+                <a
+                  v-if="selectedProject.demo"
+                  :href="selectedProject.demo"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-emerald-400/60 text-emerald-300 hover:text-white hover:bg-emerald-500/15 hover:border-emerald-400 transition"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                  Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decorative background elements -->
+      <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-[#5c7cfa]/5 rounded-full blur-3xl"></div>
+        <div
+          class="absolute bottom-1/4 right-1/4 w-40 h-40 bg-[#4c63d2]/5 rounded-full blur-3xl"
+        ></div>
+      </div>
     </section>
 
     <!-- CONTACT (compact mobile) -->
@@ -1007,6 +1180,19 @@ const experiences = [
   },
   {
     id: 2,
+    role: "Web Developer (Wordpress) Intern",
+    company: "Intelligo ID",
+    location: "Remote",
+    period: "Apr 2025 – Jul 2025",
+    bullets: [
+      "Performing website page slicing and mega menu slicing according to the provided Figma design.",
+      "Improving website speed through performance optimization and loading time reduction.",
+      "Contributing to ensuring consistent website display across various devices.",
+    ],
+    stack: ["WordPress", "Elementor", "Figma", "SEO", "Google Search Console"],
+  },
+  {
+    id: 3,
     role: "Web Developer Intern",
     company: "Research Center of Human Centric Engineering (Telkom Univ.)",
     location: "Bandung",
@@ -1018,7 +1204,7 @@ const experiences = [
     stack: ["HTML", "CSS", "JavaScript", "Figma", "MySQL"],
   },
   {
-    id: 3,
+    id: 4,
     role: "Mobile Development (Student)",
     company: "Bangkit Academy by Google, GoTo, Traveloka",
     location: "Remote",
@@ -1035,136 +1221,155 @@ const experiences = [
 // Tambahkan properti `repo` untuk tombol GitHub.
 // Jika belum ada repo spesifik, fallback ke profil GitHub.
 const gh = "https://github.com/kikidwi";
+// Enhanced projects data with detailed information
 const projects = [
   {
     id: 1,
     title: "Company Profile Website Journal1z Adv",
     subtitle: "Web development",
-    tags: ["WordPress", "Landing Page"],
+    tags: ["WordPress", "Landing Page", "SEO"],
     thumb: "src/assets/images/projects/web-9.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/journal1z-website",
+    demo: "https://journal1z.com",
+    description:
+      "A comprehensive company profile website for Journal1z Advertising agency, featuring modern design, SEO optimization, and content management capabilities. Built with WordPress and custom theme development to showcase the company's services and portfolio.",
+    features: [
+      "Responsive design across all devices",
+      "SEO optimized for better search rankings",
+      "Custom WordPress theme development",
+      "Contact form integration",
+      "Portfolio showcase section",
+      "Blog/News management system",
+    ],
+    techStack: ["WordPress", "PHP", "HTML5", "CSS3", "JavaScript", "SEO"],
   },
   {
     id: 2,
     title: "Landing Page PT. Semesta Teknologi Terpadu",
     subtitle: "Web development",
-    tags: ["WordPress", "Landing Page"],
+    tags: ["WordPress", "Landing Page", "Corporate"],
     thumb: "src/assets/images/projects/web-10.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/semesta-teknologi",
+    demo: "https://semertatech.com",
+    description:
+      "Professional corporate landing page for PT. Semesta Teknologi Terpadu, a technology solutions company. Features clean design, service showcase, and lead generation forms optimized for business conversion.",
+    features: [
+      "Professional corporate design",
+      "Service portfolio showcase",
+      "Lead generation forms",
+      "Performance optimized",
+      "Mobile-first approach",
+      "Content management system",
+    ],
+    techStack: ["WordPress", "Elementor", "PHP", "MySQL", "JavaScript"],
   },
   {
     id: 3,
     title: "Landing Page Restaurant Mangankuy",
     subtitle: "Web development",
-    tags: ["HTML", "CSS", "JavaScript"],
+    tags: ["HTML", "CSS", "JavaScript", "Restaurant"],
     thumb: "src/assets/images/projects/web-11.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/restaurant-mangankuy",
+    demo: "https://mangankuy-restaurant.netlify.app",
+    description:
+      "Modern restaurant landing page with interactive menu, online reservation system, and location integration. Built from scratch using vanilla HTML, CSS, and JavaScript with focus on performance and user experience.",
+    features: [
+      "Interactive menu display",
+      "Online table reservation",
+      "Location and contact integration",
+      "Image gallery showcase",
+      "Responsive design",
+      "Fast loading performance",
+    ],
+    techStack: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
   },
   {
     id: 4,
     title: "Humic Dashboard Survey",
     subtitle: "Web development",
-    tags: ["Dashboard", "Survey", "Data Viz"],
+    tags: ["Dashboard", "Survey", "Data Visualization"],
     thumb: "src/assets/images/projects/web-1.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/humic-survey-dashboard",
+    description:
+      "Interactive survey dashboard for Research Center of Human Centric Engineering. Features role-based access control, survey management, and real-time data visualization for collecting and analyzing user feedback.",
+    features: [
+      "Role-based authentication system",
+      "Survey creation and management",
+      "Real-time data visualization",
+      "MySQL database integration",
+      "Responsive admin panel",
+      "Export data functionality",
+    ],
+    techStack: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Chart.js"],
   },
   {
     id: 5,
     title: "Gary's Florists",
     subtitle: "Web development",
-    tags: ["Static Site"],
+    tags: ["Static Site", "E-commerce", "Florist"],
     thumb: "src/assets/images/projects/web-2.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/garys-florists",
+    demo: "https://garys-florists.netlify.app",
+    description:
+      "Beautiful static website for a florist business featuring product catalog, seasonal arrangements, and contact information. Designed with focus on visual appeal and easy navigation.",
+    features: [
+      "Product catalog display",
+      "Seasonal arrangement showcase",
+      "Contact and location info",
+      "Image optimization",
+      "SEO friendly structure",
+      "Fast static site performance",
+    ],
+    techStack: ["HTML5", "CSS3", "JavaScript", "Static Site"],
   },
   {
     id: 6,
     title: "Ellie's Fashion Blog",
     subtitle: "Web development",
-    tags: ["Blog", "Static Site"],
+    tags: ["Blog", "Static Site", "Fashion"],
     thumb: "src/assets/images/projects/web-3.png",
-    repo: gh,
-  },
-  {
-    id: 7,
-    title: "Cat Facts",
-    subtitle: "Web development",
-    tags: ["API", "Vanilla JS"],
-    thumb: "src/assets/images/projects/web-4.png",
-    repo: gh,
-  },
-  {
-    id: 8,
-    title: "Valorant Agent Web Clone",
-    subtitle: "Web development",
-    tags: ["API", "Clone"],
-    thumb: "src/assets/images/projects/web-5.png",
-    repo: gh,
-  },
-  {
-    id: 9,
-    title: "Fitness Flow",
-    subtitle: "Web development",
-    tags: ["Landing Page"],
-    thumb: "src/assets/images/projects/web-6.png",
-    repo: gh,
-  },
-  {
-    id: 10,
-    title: "Simple Notes",
-    subtitle: "Web development",
-    tags: ["Laravel", "CRUD"],
-    thumb: "src/assets/images/projects/web-7.png",
-    repo: gh,
-  },
-  {
-    id: 11,
-    title: "Creative Agency",
-    subtitle: "Web development",
-    tags: ["Landing Page"],
-    thumb: "src/assets/images/projects/web-8.png",
-    repo: gh,
-  },
-  {
-    id: 12,
-    title: "Rubist (Rubbish Sorting Assistant)",
-    subtitle: "Mobile development",
-    tags: ["Android", "ML"],
-    thumb: "src/assets/images/projects/app-1.png",
-    repo: gh,
-  },
-  {
-    id: 13,
-    title: "Course Schedule",
-    subtitle: "Mobile development",
-    tags: ["Android"],
-    thumb: "src/assets/images/projects/app-2.png",
-    repo: gh,
-  },
-  {
-    id: 14,
-    title: "Todo List App",
-    subtitle: "Mobile development",
-    tags: ["Android"],
-    thumb: "src/assets/images/projects/app-3.png",
-    repo: gh,
-  },
-  {
-    id: 15,
-    title: "Catalog Produk Journal1z.com",
-    subtitle: "Mobile design",
-    tags: ["Figma", "Design"],
-    thumb: "src/assets/images/projects/wd-1.png",
-    repo: gh,
-  },
-  {
-    id: 16,
-    title: "Landing Page Journal1z.com (Design)",
-    subtitle: "Mobile design",
-    tags: ["Figma", "Design"],
-    thumb: "src/assets/images/projects/wd-2.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/ellies-fashion-blog",
+    demo: "https://ellies-fashion.netlify.app",
+    description:
+      "Stylish fashion blog website with article management, category filtering, and responsive design. Features clean typography and image-focused layout perfect for fashion content.",
+    features: [
+      "Article categorization",
+      "Responsive image galleries",
+      "Clean typography design",
+      "Social media integration",
+      "Search functionality",
+      "Mobile optimized reading",
+    ],
+    techStack: ["HTML5", "CSS3", "JavaScript", "Static Site Generator"],
   },
 ];
+
+// Modal state management
+const selectedProject = ref(null);
+
+const openProjectDetail = (project) => {
+  selectedProject.value = project;
+  document.body.style.overflow = "hidden"; // Prevent background scroll
+};
+
+const closeProjectDetail = () => {
+  selectedProject.value = null;
+  document.body.style.overflow = "auto"; // Restore scroll
+};
+
+// Close modal on escape key
+onMounted(() => {
+  const handleEscape = (e) => {
+    if (e.key === "Escape" && selectedProject.value) {
+      closeProjectDetail();
+    }
+  };
+  document.addEventListener("keydown", handleEscape);
+
+  onBeforeUnmount(() => {
+    document.removeEventListener("keydown", handleEscape);
+  });
+});
 
 // Batasi render awal 4 item + tombol view all
 const showAll = ref(false);

@@ -156,6 +156,19 @@ const experiences = [
   },
   {
     id: 2,
+    role: "Web Developer (Wordpress) Intern",
+    company: "Intelligo ID",
+    location: "Remote",
+    period: "Apr 2025 – Jul 2025",
+    bullets: [
+      "Performing website page slicing and mega menu slicing according to the provided Figma design.",
+      "Improving website speed through performance optimization and loading time reduction.",
+      "Contributing to ensuring consistent website display across various devices.",
+    ],
+    stack: ["WordPress", "Elementor", "Figma", "SEO", "Google Search Console"],
+  },
+  {
+    id: 3,
     role: "Web Developer Intern",
     company: "Research Center of Human Centric Engineering (Telkom Univ.)",
     location: "Bandung",
@@ -167,7 +180,7 @@ const experiences = [
     stack: ["HTML", "CSS", "JavaScript", "Figma", "MySQL"],
   },
   {
-    id: 3,
+    id: 4,
     role: "Mobile Development (Student)",
     company: "Bangkit Academy by Google, GoTo, Traveloka",
     location: "Remote",
