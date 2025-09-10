@@ -8,7 +8,7 @@ export const projects = [
     title: "Company Profile Website Journal1z Adv",
     subtitle: "Web development",
     tags: ["WordPress", "Landing Page", "SEO"],
-    thumb: "src/assets/images/projects/web-9.png",
+    thumb: "/assets/images/projects/web-9.png",
     repo: "https://github.com/kikidwi/journal1z-website",
     demo: "https://journal1z.com",
     description:
@@ -28,7 +28,7 @@ export const projects = [
     title: "Landing Page PT. Semesta Teknologi Terpadu",
     subtitle: "Web development",
     tags: ["WordPress", "Landing Page", "Corporate"],
-    thumb: "src/assets/images/projects/web-10.png",
+    thumb: "/assets/images/projects/web-10.png",
     repo: "https://github.com/kikidwi/semesta-teknologi",
     demo: "https://sttech.com",
     description:
@@ -48,7 +48,7 @@ export const projects = [
     title: "Landing Page Restaurant Mangankuy",
     subtitle: "Web development",
     tags: ["HTML", "CSS", "JavaScript", "Restaurant"],
-    thumb: "src/assets/images/projects/web-11.png",
+    thumb: "/assets/images/projects/web-11.png",
     repo: "https://github.com/kikidwi/restaurant-mangankuy",
     demo: "https://mangankuy-restaurant.netlify.app",
     description:
@@ -68,7 +68,7 @@ export const projects = [
     title: "Humic Dashboard Survey",
     subtitle: "Web development",
     tags: ["Dashboard", "Survey", "Data Visualization"],
-    thumb: "src/assets/images/projects/web-1.png",
+    thumb: "/assets/images/projects/web-1.png",
     repo: "https://github.com/kikidwi/humic-survey-dashboard",
     description:
       "Dashboard survei untuk Research Center of Human Centric Engineering. Role-based access, manajemen survei, dan visualisasi data realtime.",
@@ -87,7 +87,7 @@ export const projects = [
     title: "Gary's Florists",
     subtitle: "Web development",
     tags: ["Static Site", "E-commerce", "Florist"],
-    thumb: "src/assets/images/projects/web-2.png",
+    thumb: "/assets/images/projects/web-2.png",
     repo: "https://github.com/kikidwi/garys-florists",
     demo: "https://garys-florists.netlify.app",
     description:
@@ -107,7 +107,7 @@ export const projects = [
     title: "Ellie's Fashion Blog",
     subtitle: "Web development",
     tags: ["Blog", "Static Site", "Fashion"],
-    thumb: "src/assets/images/projects/web-3.png",
+    thumb: "/assets/images/projects/web-3.png",
     repo: "https://github.com/kikidwi/ellies-fashion-blog",
     demo: "https://ellies-fashion.netlify.app",
     description:
@@ -129,7 +129,7 @@ export const projects = [
     title: "Cat Facts",
     subtitle: "Web development",
     tags: ["API", "Vanilla JS"],
-    thumb: "src/assets/images/projects/web-4.png",
+    thumb: "/assets/images/projects/web-4.png",
     repo: gh,
     description:
       "Mini app yang menampilkan fakta kucing acak dari public API dengan UX ringan dan cepat.",
@@ -147,7 +147,7 @@ export const projects = [
     title: "Valorant Agent Web Clone",
     subtitle: "Web development",
     tags: ["API", "Clone"],
-    thumb: "src/assets/images/projects/web-5.png",
+    thumb: "/assets/images/projects/web-5.png",
     repo: gh,
     description:
       "Clone website daftar agen Valorant dengan data publik, menampilkan role, kemampuan, dan pencarian.",
@@ -165,7 +165,7 @@ export const projects = [
     title: "Fitness Flow",
     subtitle: "Web development",
     tags: ["Landing Page"],
-    thumb: "src/assets/images/projects/web-6.png",
+    thumb: "/assets/images/projects/web-6.png",
     repo: gh,
     description: "Landing page bertema fitness dengan CTA, section program, dan highlight manfaat.",
     features: [
@@ -182,7 +182,7 @@ export const projects = [
     title: "Simple Notes",
     subtitle: "Web development",
     tags: ["Laravel", "CRUD"],
-    thumb: "src/assets/images/projects/web-7.png",
+    thumb: "/assets/images/projects/web-7.png",
     repo: gh,
     description:
       "Aplikasi catatan sederhana berbasis Laravel dengan fitur CRUD, validasi, dan flash message.",
@@ -200,7 +200,7 @@ export const projects = [
     title: "Creative Agency",
     subtitle: "Web development",
     tags: ["Landing Page"],
-    thumb: "src/assets/images/projects/web-8.png",
+    thumb: "/assets/images/projects/web-8.png",
     repo: gh,
     description:
       "Landing page agensi kreatif dengan showcase layanan, preview portfolio, dan CTA kontak.",
@@ -220,7 +220,7 @@ export const projects = [
     title: "Rubist (Rubbish Sorting Assistant)",
     subtitle: "Mobile development",
     tags: ["Android", "ML"],
-    thumb: "src/assets/images/projects/app-1.png",
+    thumb: "/assets/images/projects/app-1.png",
     repo: gh,
     description:
       "Aplikasi Android untuk klasifikasi sampah berbasis on-device ML guna membantu pemilahan yang benar.",
@@ -238,7 +238,7 @@ export const projects = [
     title: "Course Schedule",
     subtitle: "Mobile development",
     tags: ["Android"],
-    thumb: "src/assets/images/projects/app-2.png",
+    thumb: "/assets/images/projects/app-2.png",
     repo: gh,
     description:
       "Aplikasi jadwal kuliah untuk mencatat mata kuliah per hari lengkap dengan pengingat.",
@@ -256,7 +256,7 @@ export const projects = [
     title: "Todo List App",
     subtitle: "Mobile development",
     tags: ["Android"],
-    thumb: "src/assets/images/projects/app-3.png",
+    thumb: "/assets/images/projects/app-3.png",
     repo: gh,
     description:
       "Aplikasi to-do sederhana untuk mencatat tugas dengan filter status dan persistensi lokal.",
@@ -276,7 +276,7 @@ export const projects = [
     title: "Catalog Produk Journal1z.com",
     subtitle: "Mobile design",
     tags: ["Figma", "Design"],
-    thumb: "src/assets/images/projects/wd-1.png",
+    thumb: "/assets/images/projects/wd-1.png",
     repo: gh,
     description:
       "Desain UI katalog produk Journal1z untuk mobile: kartu produk, filter, dan detail produk.",
@@ -293,7 +293,7 @@ export const projects = [
     title: "Landing Page Journal1z.com (Design)",
     subtitle: "Mobile design",
     tags: ["Figma", "Design"],
-    thumb: "src/assets/images/projects/wd-2.png",
+    thumb: "/assets/images/projects/wd-2.png",
     repo: gh,
     description:
       "Desain landing page mobile untuk Journal1z dengan hero, highlight layanan, dan CTA.",

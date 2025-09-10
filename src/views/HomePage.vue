@@ -195,8 +195,8 @@
             handle="kikii.dwp"
             status=""
             contact-text="Contact Me"
-            avatar-url="/src/assets/person.png"
-            icon-url="/src/assets/bgPerson.png"
+            avatar-url="/assets/person.png"
+            icon-url="/assets/bgPerson.png"
             grain-url="/assets/grain.webp"
             :show-user-info="true"
             :show-behind-gradient="false"
@@ -1151,13 +1151,13 @@ onBeforeUnmount(() => {
 const downloadResume = () => {
   try {
     const link = document.createElement("a");
-    link.href = "/src/assets/resume.pdf";
+    link.href = "/assets/resume.pdf";
     link.download = "Kiki-Dwi-Prasetyo-Resume.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   } catch {
-    window.open("/src/assets/resume.pdf", "_blank");
+    window.open("/assets/resume.pdf", "_blank");
   }
 };
 
@@ -1304,7 +1304,7 @@ const projects = [
     title: "Company Profile Website Journal1z Adv",
     subtitle: "Web development",
     tags: ["WordPress", "Landing Page", "SEO"],
-    thumb: "src/assets/images/projects/web-9.png",
+    thumb: "/assets/images/projects/web-9.png",
     repo: "https://github.com/kikidwi/journal1z-website",
     demo: "https://journal1z.com",
     description:
@@ -1324,7 +1324,7 @@ const projects = [
     title: "Landing Page PT. Semesta Teknologi Terpadu",
     subtitle: "Web development",
     tags: ["WordPress", "Landing Page", "Corporate"],
-    thumb: "src/assets/images/projects/web-10.png",
+    thumb: "/assets/images/projects/web-10.png",
     repo: "https://github.com/kikidwi/semesta-teknologi",
     demo: "https://sttech.com",
     description:
@@ -1344,7 +1344,7 @@ const projects = [
     title: "Landing Page Restaurant Mangankuy",
     subtitle: "Web development",
     tags: ["HTML", "CSS", "JavaScript", "Restaurant"],
-    thumb: "src/assets/images/projects/web-11.png",
+    thumb: "/assets/images/projects/web-11.png",
     repo: "https://github.com/kikidwi/restaurant-mangankuy",
     demo: "https://mangankuy-restaurant.netlify.app",
     description:
@@ -1364,7 +1364,7 @@ const projects = [
     title: "Humic Dashboard Survey",
     subtitle: "Web development",
     tags: ["Dashboard", "Survey", "Data Visualization"],
-    thumb: "src/assets/images/projects/web-1.png",
+    thumb: "/assets/images/projects/web-1.png",
     repo: "https://github.com/kikidwi/humic-survey-dashboard",
     description:
       "Interactive survey dashboard for Research Center of Human Centric Engineering. Features role-based access control, survey management, and real-time data visualization for collecting and analyzing user feedback.",
@@ -1383,7 +1383,7 @@ const projects = [
     title: "Gary's Florists",
     subtitle: "Web development",
     tags: ["Static Site", "E-commerce", "Florist"],
-    thumb: "src/assets/images/projects/web-2.png",
+    thumb: "/assets/images/projects/web-2.png",
     repo: "https://github.com/kikidwi/garys-florists",
     demo: "https://garys-florists.netlify.app",
     description:
@@ -1403,7 +1403,7 @@ const projects = [
     title: "Ellie's Fashion Blog",
     subtitle: "Web development",
     tags: ["Blog", "Static Site", "Fashion"],
-    thumb: "src/assets/images/projects/web-3.png",
+    thumb: "/assets/images/projects/web-3.png",
     repo: "https://github.com/kikidwi/ellies-fashion-blog",
     demo: "https://ellies-fashion.netlify.app",
     description:
