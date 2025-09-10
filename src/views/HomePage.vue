@@ -1220,7 +1220,6 @@ const experiences = [
 // =================== PROJECTS ===================
 // Tambahkan properti `repo` untuk tombol GitHub.
 // Jika belum ada repo spesifik, fallback ke profil GitHub.
-const gh = "https://github.com/kikidwi";
 // Enhanced projects data with detailed information
 const projects = [
   {
@@ -1250,7 +1249,7 @@ const projects = [
     tags: ["WordPress", "Landing Page", "Corporate"],
     thumb: "src/assets/images/projects/web-10.png",
     repo: "https://github.com/kikidwi/semesta-teknologi",
-    demo: "https://semertatech.com",
+    demo: "https://sttech.com",
     description:
       "Professional corporate landing page for PT. Semesta Teknologi Terpadu, a technology solutions company. Features clean design, service showcase, and lead generation forms optimized for business conversion.",
     features: [
