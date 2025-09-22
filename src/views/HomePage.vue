@@ -1298,6 +1298,7 @@ const experiences = [
 ];
 
 // =================== PROJECTS (ringkas 6 item) ===================
+const gh = "https://github.com/kikidwi";
 const projects = [
   {
     id: 1,
