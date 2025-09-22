@@ -9,8 +9,7 @@ export const projects = [
     subtitle: "Web development",
     tags: ["WordPress", "Landing Page", "SEO"],
     thumb: "/assets/images/projects/web-9.png",
-    repo: "https://github.com/kikidwi/journal1z-website",
-    demo: "https://journal1z.com",
+    demo: "https://journal1zadv.com",
     description:
       "Company profile untuk agensi Journal1z Advertising dengan desain modern, optimasi SEO, dan manajemen konten yang mudah. Dibuat menggunakan WordPress dengan kustomisasi tema.",
     features: [
@@ -24,12 +23,31 @@ export const projects = [
     techStack: ["WordPress", "PHP", "HTML5", "CSS3", "JavaScript", "SEO"],
   },
   {
+    id: 12,
+    title: "Company Profile Website Intelligo ID",
+    subtitle: "Web development",
+    tags: ["WordPress", "Landing Page", "SEO"],
+    thumb: "/assets/images/projects/web-12.png",
+    demo: "https://www.intelligo.id/",
+    description:
+      "Website company profile untuk Intelligo ID, platform EduTech Data Science & AI dengan tampilan modern, responsif, dan informatif mengenai program Bootcamp, Course, serta Workshop.",
+    features: [
+      "Responsive di semua device",
+      "Optimasi SEO (meta, sitemap, GSC)",
+      "Custom theme & section builder",
+      "Integrasi contact form",
+      "Portfolio showcase",
+      "Blog/News management",
+      "Mega Menu",
+    ],
+    techStack: ["WordPress", "PHP", "HTML5", "CSS3", "JavaScript", "SEO"],
+  },
+  {
     id: 2,
     title: "Landing Page PT. Semesta Teknologi Terpadu",
     subtitle: "Web development",
     tags: ["WordPress", "Landing Page", "Corporate"],
     thumb: "/assets/images/projects/web-10.png",
-    repo: "https://github.com/kikidwi/semesta-teknologi",
     demo: "https://sttech.com",
     description:
       "Landing page korporat untuk perusahaan solusi teknologi. Menonjolkan layanan inti, CTA konversi, dan performa yang cepat.",
@@ -49,18 +67,11 @@ export const projects = [
     subtitle: "Web development",
     tags: ["HTML", "CSS", "JavaScript", "Restaurant"],
     thumb: "/assets/images/projects/web-11.png",
-    repo: "https://github.com/kikidwi/restaurant-mangankuy",
-    demo: "https://mangankuy-restaurant.netlify.app",
+    repo: "https://github.com/kikidwi/Landing-page-Restaurant-Mangankuy",
+    demo: "https://kikidwi.github.io/Landing-page-Restaurant-Mangankuy",
     description:
-      "Landing page restoran dengan menu interaktif, reservasi, dan integrasi lokasi. Fokus pada UX dan performa.",
-    features: [
-      "Menu interaktif & gallery",
-      "Form reservasi sederhana",
-      "Integrasi lokasi & kontak",
-      "Responsive layout",
-      "Loading cepat",
-      "Animasi halus",
-    ],
+      "Landing page restoran dengan menu interaktif, reservasi. Fokus pada UX dan performa.",
+    features: ["Menu interaktif & gallery", "Integrasi lokasi & kontak", "Animasi halus"],
     techStack: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
   },
   {
@@ -88,8 +99,7 @@ export const projects = [
     subtitle: "Web development",
     tags: ["Static Site", "E-commerce", "Florist"],
     thumb: "/assets/images/projects/web-2.png",
-    repo: "https://github.com/kikidwi/garys-florists",
-    demo: "https://garys-florists.netlify.app",
+    repo: "https://github.com/kikidwi/Gary-s-Florists",
     description:
       "Website statis florist dengan katalog produk, koleksi musiman, dan informasi kontak. Fokus pada visual dan navigasi yang simpel.",
     features: [
@@ -108,8 +118,7 @@ export const projects = [
     subtitle: "Web development",
     tags: ["Blog", "Static Site", "Fashion"],
     thumb: "/assets/images/projects/web-3.png",
-    repo: "https://github.com/kikidwi/ellies-fashion-blog",
-    demo: "https://ellies-fashion.netlify.app",
+    repo: "https://github.com/kikidwi/Ellie-s-Fashion-Blog",
     description:
       "Blog fashion dengan manajemen artikel, kategori, dan layout yang fokus pada tipografi serta gambar.",
     features: [
@@ -130,7 +139,7 @@ export const projects = [
     subtitle: "Web development",
     tags: ["API", "Vanilla JS"],
     thumb: "/assets/images/projects/web-4.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/Cat_Facts_Web_Application-using_api",
     description:
       "Mini app yang menampilkan fakta kucing acak dari public API dengan UX ringan dan cepat.",
     features: [
@@ -148,7 +157,7 @@ export const projects = [
     subtitle: "Web development",
     tags: ["API", "Clone"],
     thumb: "/assets/images/projects/web-5.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/Valorant-Agent-using-API",
     description:
       "Clone website daftar agen Valorant dengan data publik, menampilkan role, kemampuan, dan pencarian.",
     features: [
@@ -183,7 +192,7 @@ export const projects = [
     subtitle: "Web development",
     tags: ["Laravel", "CRUD"],
     thumb: "/assets/images/projects/web-7.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/SimpleNotes-laravel11",
     description:
       "Aplikasi catatan sederhana berbasis Laravel dengan fitur CRUD, validasi, dan flash message.",
     features: [
@@ -221,7 +230,7 @@ export const projects = [
     subtitle: "Mobile development",
     tags: ["Android", "ML"],
     thumb: "/assets/images/projects/app-1.png",
-    repo: gh,
+    repo: "https://github.com/berlianm/Rubist-Application",
     description:
       "Aplikasi Android untuk klasifikasi sampah berbasis on-device ML guna membantu pemilahan yang benar.",
     features: [
@@ -239,7 +248,7 @@ export const projects = [
     subtitle: "Mobile development",
     tags: ["Android"],
     thumb: "/assets/images/projects/app-2.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/CourseSchedule-App",
     description:
       "Aplikasi jadwal kuliah untuk mencatat mata kuliah per hari lengkap dengan pengingat.",
     features: [
@@ -257,7 +266,7 @@ export const projects = [
     subtitle: "Mobile development",
     tags: ["Android"],
     thumb: "/assets/images/projects/app-3.png",
-    repo: gh,
+    repo: "https://github.com/kikidwi/ToDoList-app",
     description:
       "Aplikasi to-do sederhana untuk mencatat tugas dengan filter status dan persistensi lokal.",
     features: [

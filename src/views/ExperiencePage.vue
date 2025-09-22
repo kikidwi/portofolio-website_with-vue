@@ -135,7 +135,7 @@ import ChipList from "@/components/ChipList.vue";
 
 // Stats disesuaikan dengan profil & jumlah project di halaman Home
 const stats = [
-  { value: "2+", label: "Years" },
+  { value: "1+", label: "Years" },
   { value: "16+", label: "Projects" },
   { value: "3", label: "Roles" },
 ];
